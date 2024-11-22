@@ -16,3 +16,12 @@ exports.createReminder = async (req, res) => {
       res.status(500).json({ message: 'Error creating reminder', error });
     }
   };
+
+  exports.getReminders = async (req, res) => {
+    try {
+      const reminders = await MedicationReminder.find();
+      res.status(200).json(reminders);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching reminders', error });
+    }
+  };
