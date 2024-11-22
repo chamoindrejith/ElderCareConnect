@@ -8,4 +8,8 @@ const routes = require('../backend/src/routes/index.js');
 const port = process.env.PORT;
 
 
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
