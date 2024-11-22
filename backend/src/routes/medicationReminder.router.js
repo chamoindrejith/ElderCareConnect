@@ -5,4 +5,4 @@ const { authenticateToken } = require('../middleware/auth.middleware.js');
 
 
 router.post('/addmed', authenticateToken, medicationController.createReminder);
-
+router.get('/viewmed', authenticateToken, medicationController.getReminders);
