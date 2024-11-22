@@ -40,3 +40,13 @@ exports.createReminder = async (req, res) => {
       res.status(500).json({ message: 'Error updating reminder', error });
     }
   };
+
+  exports.deleteReminder = async (req, res) => {
+    try {
+      const { id } = req.params;
+      await MedicationReminder.findByIdAndDelete(id);
+      res.status(200).json({ message: 'Reminder deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting reminder', error });
+    }
+  };
