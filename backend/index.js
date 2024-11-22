@@ -15,3 +15,4 @@ app.use(express.urlencoded({ extended: false }));
 
 database.connectDB();
 
+app.use('/api', routes);
