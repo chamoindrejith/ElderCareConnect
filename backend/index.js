@@ -35,4 +35,9 @@ server.listen(port, () => {
 
 io.on('connection', (socket) => {
     console.log(`New client connected: ${socket.id}`);
+    const userId = socket.handshake.query.userId; // Send userId as part of connection handshake
+    if (userId) {
+      socket.join(userId);
+      console.log(`User ${userId} joined room ${userId}`);
+    }
 });
