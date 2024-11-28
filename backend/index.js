@@ -24,3 +24,5 @@ app.use('/api', routes);
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 });
+
+initSocket(io);
