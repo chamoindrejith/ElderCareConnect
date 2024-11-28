@@ -10,3 +10,6 @@ const { authenticateToken } = require('../middleware/auth.middleware');
 router.get('/history/:senderId/:receiverId', authenticateToken, chatController.getChatHistory);
 
 router.post('/send', authenticateToken, chatController.saveMessage);
+
+
+module.exports = router;
