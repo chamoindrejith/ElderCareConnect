@@ -14,3 +14,16 @@ exports.getChatHistory = async (req, res) => {
       res.status(500).json({ message: 'Error fetching chat history', error });
     }
   };
+
+exports.saveMessage = async (req, res) => {
+    try {
+      const { senderId, receiverId, text } = req.body;
+      const message = new Message({
+        sender: senderId,
+        receiver: receiverId,
+        text
+      });
+      await message.save();
+    }
+};
+
