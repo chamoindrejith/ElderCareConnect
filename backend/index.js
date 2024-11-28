@@ -17,6 +17,8 @@ const io = socketIo(server);
 
 initSocket(io);
 
+require('./socket.js')(io);
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
@@ -31,3 +33,6 @@ server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 });
 
+io.on('connection', (socket) => {
+    console.log(`New client connected: ${socket.id}`);
+});
