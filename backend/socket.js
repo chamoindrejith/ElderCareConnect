@@ -9,4 +9,26 @@ module.exports = (io) => {
             socket.join(room);
             console.log(`User ${senderId} joined room ${room}`);
           });
+
+          socket.on('sendMessage', async (data) => {
+            const { senderId, receiverId, text } = data;
+            try {
+              const message = new Message({
+                sender: senderId,
+                receiver: receiverId,
+                text
+              });
+              await message.save();
+      
+              const room = `${senderId}-${receiverId}`;
+              io.to(room).emit('receiveMessage', message);
+            } catch (error) {
+              console.error('Error saving message:', error);
+            }
+          });
+      
+          socket.on('disconnect', () => {
+            console.log('Client disconnected:', socket.id);
+          });
+        });
 };
