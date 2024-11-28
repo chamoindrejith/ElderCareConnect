@@ -12,7 +12,10 @@ const { initSocket } = require('./src/controllers/chat.controllers.js');
 const port = process.env.PORT;
 
 const server = http.createServer(app);
+
 const io = socketIo(server);
+
+initSocket(io);
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -28,4 +31,3 @@ server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 });
 
-initSocket(io);
