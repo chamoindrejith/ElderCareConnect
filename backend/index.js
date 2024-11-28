@@ -17,7 +17,7 @@ const io = socketIo(server);
 
 initSocket(io);
 
-
+require('./socket.js')(io);
 
 app.use(cors());
 app.use(bodyParser.json());
