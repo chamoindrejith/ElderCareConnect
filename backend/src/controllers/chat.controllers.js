@@ -24,6 +24,10 @@ exports.saveMessage = async (req, res) => {
         text
       });
       await message.save();
+  
+      res.status(201).json({ message: 'Message sent successfully', data: message });
+    } catch (error) {
+      res.status(500).json({ message: 'Error sending message', error });
     }
-};
+  };
 
