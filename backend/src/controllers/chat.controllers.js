@@ -34,3 +34,6 @@ exports.saveMessage = async (req, res) => {
 
   let io; 
 
+  exports.initSocket = (socketIo) => {
+    io = socketIo; 
+  };
