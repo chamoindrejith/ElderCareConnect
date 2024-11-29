@@ -1,13 +1,14 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  username: { type: String, required: true,unique:true },
+  password: { type: String, required: true },
   dateOfBirth: { type: Date },
   contactInfo: { type: String },
   address: { type: String },
   emergencyContactId: { type: mongoose.Schema.Types.ObjectId, ref: 'EmergencyContact' },
   medicalInfoId: { type: mongoose.Schema.Types.ObjectId, ref: 'HealthRecord' },
-  role: { type: String, enum: ['user', 'admin'], default: 'user' },
+  role: { type: String, enum: ['eldery', 'caregiver'], required:true},
   lastCheckin: { type: Date, default: Date.now }
 });
 
