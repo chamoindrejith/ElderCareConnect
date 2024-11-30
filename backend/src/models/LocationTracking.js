@@ -8,5 +8,5 @@ const locationTrackingSchema = new mongoose.Schema({
   emergencyStatus: { type: Boolean, default: false }
 });
 
-const LocationTracking = mongoose.model('LocationTracking', locationTrackingSchema);
-export default LocationTracking;
+module.exports = mongoose.model('LocationTracking', locationTrackingSchema);
+

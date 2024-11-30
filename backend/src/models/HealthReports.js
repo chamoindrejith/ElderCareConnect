@@ -8,5 +8,5 @@ const healthReportSchema = new mongoose.Schema({
   medicationAdherence: { type: String }
 });
 
-const HealthReport = mongoose.model('HealthReport', healthReportSchema);
-export default HealthReport;
+module.exports = mongoose.model('HealthReport', healthReportSchema);
+

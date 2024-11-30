@@ -8,5 +8,5 @@ const alertSchema = new mongoose.Schema({
   status: { type: String, enum: ['active', 'resolved'], default: 'active' }
 });
 
-const Alert = mongoose.model('Alert', alertSchema);
-export default Alert;
+module.exports = mongoose.model('Alert', alertSchema);
+

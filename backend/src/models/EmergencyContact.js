@@ -8,5 +8,5 @@ const emergencyContactSchema = new mongoose.Schema({
   email: { type: String }
 });
 
-const EmergencyContact = mongoose.model('EmergencyContact', emergencyContactSchema);
-export default EmergencyContact;
+module.exports = mongoose.model('EmergencyContact', emergencyContactSchema);
+

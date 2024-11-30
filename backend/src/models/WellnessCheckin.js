@@ -6,5 +6,5 @@ const wellnessCheckinSchema = new mongoose.Schema({
   responseStatus: { type: String, enum: ['completed', 'incomplete'], default: 'incomplete' }
 });
 
-const WellnessCheckin = mongoose.model('WellnessCheckin', wellnessCheckinSchema);
-export default WellnessCheckin;
+module.exports = mongoose.model('WellnessCheckin', wellnessCheckinSchema);
+

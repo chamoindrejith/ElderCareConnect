@@ -7,5 +7,5 @@ const wellnessSurveySchema = new mongoose.Schema({
   responses: [String]
 });
 
-const WellnessSurvey = mongoose.model('WellnessSurvey', wellnessSurveySchema);
-export default WellnessSurvey;
+module.exports = mongoose.model('WellnessSurvey', wellnessSurveySchema);
+

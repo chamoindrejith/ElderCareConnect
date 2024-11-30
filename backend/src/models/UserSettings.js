@@ -9,5 +9,5 @@ const userSettingsSchema = new mongoose.Schema({
   languagePreference: { type: String, default: 'English' }
 });
 
-const UserSettings = mongoose.model('UserSettings', userSettingsSchema);
-export default UserSettings;
+module.exports = mongoose.model('UserSettings', userSettingsSchema);
+

@@ -11,5 +11,5 @@ const healthRecordSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now }
 });
 
-const HealthRecord = mongoose.model('HealthRecord', healthRecordSchema);
-export default HealthRecord;
+module.exports = mongoose.model('HealthRecord', healthRecordSchema);
+

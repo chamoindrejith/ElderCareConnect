@@ -7,5 +7,5 @@ const deviceSchema = new mongoose.Schema({
   lastSyncTime: { type: Date, default: Date.now }
 });
 
-const Device = mongoose.model('Device', deviceSchema);
-export default Device;
+module.exports = mongoose.model('Device', deviceSchema);
+
