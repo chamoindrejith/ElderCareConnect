@@ -112,5 +112,5 @@ Create a `.env` file in the root directory and add the required API keys and con
 
 ---
 
-## Conclusion
+## 🎯 Conclusion
 ElderCare Connect is a thoughtfully designed solution addressing the unique challenges faced by elderly individuals living alone. By integrating advanced technologies such as WebSocket for real-time communication and geolocation for emergency location sharing, the application enhances the safety, health monitoring, and social engagement of its users. This project not only empowers elderly individuals to live independently but also provides peace of mind to families and caregivers. As we continue to innovate and refine the platform, ElderCare Connect strives to set a benchmark in elderly care technology.
