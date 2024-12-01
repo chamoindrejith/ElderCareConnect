@@ -4,5 +4,6 @@ const  emergencyContactContoller  = require('../controllers/emergencyContact.con
 
 router.post('/',  emergencyContactContoller.createContact);         // Create a contact
 router.get('/', emergencyContactContoller.getContacts);  
+router.get('/:id', emergencyContactContoller.getContactById);
 
 module.exports = router;
