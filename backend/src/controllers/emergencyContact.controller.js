@@ -37,3 +37,13 @@ exports.getContacts = async (req, res) => {
     res.status(500).json({ message: 'Error fetching contacts', error });
   }
 };
+
+exports.getContactById = async (req, res) => {
+  try {
+    const contact = await EmergencyContact.findById(req.params.id);
+    if (!contact) return res.status(404).json({ message: 'Contact not found' });
+    res.status(200).json(contact);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching contact', error });
+  }
+};
