@@ -2,14 +2,14 @@ const User=require("../models/User");
 const UserSettings=require("../models/UserSettings");
 const bcrypt =require("bcrypt")
 
-export async function register(req,res){
-    const{ username, password,email,dateOfBirth,contactInfo,address,emergencyContactId, medicalInfoId,  role,lastCheckin}=req.body;
+ async function register(req,res){
+    const{ username, password,email,dateOfBirth,contactInfo,address, role}=req.body;
     const saltRound=10;
 
 
 try{
     const existinguser = await User.findOne({email});
-    if(existingUser){
+    if(existinguser){
         return res.status(400).json({ message: 'User already exists' });
     }
 
@@ -22,10 +22,7 @@ try{
         dateOfBirth,
         contactInfo,
         address,
-        emergencyContactId,
-        medicalInfoId,
-        role,
-        lastCheckin,
+        role
 
     })
     
@@ -37,3 +34,5 @@ try{
         res.status(500).json({ message: "Error creating user!" ,error: error.message });
     }
 }
+
+module.exports = { register };
