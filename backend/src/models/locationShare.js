@@ -9,3 +9,5 @@ const locationSchema = new mongoose.Schema({
     },
     sharedAt: { type: Date, default: Date.now },
   });
+
+module.exports = mongoose.model('Location', locationSchema);
