@@ -55,7 +55,8 @@ exports.saveMessage = async (req, res) => {
       }
       res.status(200).json({ message: "Location shared successfully!" });
     } catch (error) {
-      
+      console.error("Error sharing location:", error);
+      res.status(500).json({ message: "Failed to share location.", error });
     }
   };
   
