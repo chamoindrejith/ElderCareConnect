@@ -38,4 +38,25 @@ exports.saveMessage = async (req, res) => {
     io = socketIo; 
   };
 
+  exports.shareLocation = async (req, res) => {
+    try {
+      const { senderId, receiverId, location } = req.body;
+      
+      console.log(`Location shared by ${senderId} to ${receiverId}:`, location);
+  
+      if (io) {
+        console.log(`Emitting location to receiver ID: ${receiverId}`);
+        io.to(receiverId).emit('locationShared', {
+          senderId,
+          location,
+        });
+      } else {
+        console.error("Socket.IO instance is not initialized.");
+      }
+      res.status(200).json({ message: "Location shared successfully!" });
+    } catch (error) {
+      console.error("Error sharing location:", error);
+      res.status(500).json({ message: "Failed to share location.", error });
+    }
+  };
   
