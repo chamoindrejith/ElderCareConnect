@@ -1,5 +1,4 @@
 const User=require("../models/User");
-//const UserSettings=require("../models/UserSettings");
 const bcrypt =require("bcrypt")
 const jwt = require("jsonwebtoken");
 
@@ -87,9 +86,15 @@ async function login(req, res) {
 //update user
 async function updateUser(req, res) {
     const { userId } = req.params; // Assume user ID is passed as a URL parameter
+    console.log(req.params);
     const { username, password, email, dateOfBirth, contactInfo, address, role } = req.body;
 
     try {
+        // Validate the userId is a valid ObjectId
+        if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).json({ message: "Invalid User ID format" });
+        }
+
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -106,10 +111,11 @@ async function updateUser(req, res) {
         // Update password if provided
         if (password) {
             const saltRound = 10;
-            user.password = bcrypt.hashSync(password, saltRound);
+            user.password = await bcrypt.hash(password, saltRound);
         }
 
         await user.save();
+
         res.status(200).json({
             message: "User updated successfully!",
             user: {
@@ -123,6 +129,5 @@ async function updateUser(req, res) {
         res.status(500).json({ message: "Error updating user!", error: error.message });
     }
 }
-
 
 module.exports = { register, login,updateUser };

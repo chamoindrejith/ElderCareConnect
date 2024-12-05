@@ -6,7 +6,7 @@ const {updateUser}=require('../controllers/userController.js')
 
 router.post('/register',register);
 router.post('/login',login);
-router.put('/updateUser',updateUser);
+router.put('/updateUser/:userId',updateUser);
 
 
 
