@@ -38,4 +38,13 @@ exports.saveMessage = async (req, res) => {
     io = socketIo; 
   };
 
+  exports.shareLocation = async (req, res) => {
+    try {
+      
+  
+      
+    } catch (error) {
+      
+    }
+  };
   
