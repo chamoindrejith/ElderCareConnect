@@ -3,10 +3,11 @@ const MedicationReminder = require('../models/medicationReminder.js');
 
 exports.createReminder = async (req, res) => {
     try {
-      const { title, details } = req.body;
+      const { title, details, reminderTime } = req.body;
       const reminder = new MedicationReminder({
         title,
         details,
+        reminderTime,
         createdBy: req.user.role,
         updatedBy: req.user.role
       });
@@ -29,10 +30,10 @@ exports.createReminder = async (req, res) => {
   exports.updateReminder = async (req, res) => {
     try {
       const { id } = req.params;
-      const { title, details } = req.body;
+      const { title, details, reminderTime } = req.body;
       const reminder = await MedicationReminder.findByIdAndUpdate(
         id,
-        { title, details, updatedBy: req.user.role, updatedAt: Date.now() },
+        { title, details, reminderTime, updatedBy: req.user.role, updatedAt: Date.now() },
         { new: true }
       );
       res.status(200).json(reminder);
