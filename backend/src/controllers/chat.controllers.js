@@ -40,6 +40,7 @@ exports.saveMessage = async (req, res) => {
 
   exports.shareLocation = async (req, res) => {
     try {
+      const { senderId, receiverId, location } = req.body;
       
   
       
