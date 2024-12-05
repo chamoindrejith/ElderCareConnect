@@ -38,9 +38,17 @@ module.exports = (io) => {
   io.on('connection', (socket) => {
     console.log("User connected:", socket.id);
 
-    
     socket.on('shareLocation', (data) => {
       const { senderId, receiverId, location } = data;
+
+      io.to(receiverId).emit('locationReceived', {
+        senderId,
+        location,
+      });
+    });
+
+    socket.on('disconnect', () => {
+      console.log("User disconnected:", socket.id);
 
     });
   });
