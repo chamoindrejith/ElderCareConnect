@@ -53,7 +53,7 @@ exports.saveMessage = async (req, res) => {
       } else {
         console.error("Socket.IO instance is not initialized.");
       }
-      
+      res.status(200).json({ message: "Location shared successfully!" });
     } catch (error) {
       
     }
