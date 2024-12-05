@@ -3,10 +3,11 @@ const MedicationReminder = require('../models/medicationReminder.js');
 
 exports.createReminder = async (req, res) => {
     try {
-      const { title, details } = req.body;
+      const { title, details, reminderTime } = req.body;
       const reminder = new MedicationReminder({
         title,
         details,
+        reminderTime,
         createdBy: req.user.role,
         updatedBy: req.user.role
       });
@@ -20,6 +21,9 @@ exports.createReminder = async (req, res) => {
   exports.getReminders = async (req, res) => {
     try {
       const reminders = await MedicationReminder.find();
+      if (!reminders) {
+        return res.status(404).json({ message: 'Reminder not found' });
+      }
       res.status(200).json(reminders);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching reminders', error });
@@ -29,12 +33,15 @@ exports.createReminder = async (req, res) => {
   exports.updateReminder = async (req, res) => {
     try {
       const { id } = req.params;
-      const { title, details } = req.body;
+      const { title, details, reminderTime } = req.body;
       const reminder = await MedicationReminder.findByIdAndUpdate(
         id,
-        { title, details, updatedBy: req.user.role, updatedAt: Date.now() },
+        { title, details, reminderTime, updatedBy: req.user.role, updatedAt: Date.now() },
         { new: true }
       );
+      if (!reminder) {
+        return res.status(404).json({ message: 'Reminder not found' });
+      }
       res.status(200).json(reminder);
     } catch (error) {
       res.status(500).json({ message: 'Error updating reminder', error });
@@ -45,6 +52,9 @@ exports.createReminder = async (req, res) => {
     try {
       const { id } = req.params;
       await MedicationReminder.findByIdAndDelete(id);
+      if (!reminder) {
+        return res.status(404).json({ message: 'Reminder not found' });
+      }
       res.status(200).json({ message: 'Reminder deleted successfully' });
     } catch (error) {
       res.status(500).json({ message: 'Error deleting reminder', error });
