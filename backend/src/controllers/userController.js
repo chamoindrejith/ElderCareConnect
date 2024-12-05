@@ -130,4 +130,35 @@ async function updateUser(req, res) {
     }
 }
 
-module.exports = { register, login,updateUser };
+// Delete user
+async function deleteUser(req, res) {
+    const { userId } = req.params; // Assume user ID is passed as a URL parameter
+
+    try {
+        // Validate the userId is a valid ObjectId
+        if (!userId || !userId.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).json({ message: "Invalid User ID format" });
+        }
+
+        // Find and delete the user
+        const user = await User.findByIdAndDelete(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({
+            message: "User deleted successfully!",
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role,
+            },
+        });
+    } catch (error) {
+        console.error("Delete error:", error.message);
+        res.status(500).json({ message: "Error deleting user!", error: error.message });
+    }
+}
+
+module.exports = { register, login,updateUser,deleteUser};
