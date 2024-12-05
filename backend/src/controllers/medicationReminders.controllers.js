@@ -21,6 +21,9 @@ exports.createReminder = async (req, res) => {
   exports.getReminders = async (req, res) => {
     try {
       const reminders = await MedicationReminder.find();
+      if (!reminders) {
+        return res.status(404).json({ message: 'Reminder not found' });
+      }
       res.status(200).json(reminders);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching reminders', error });
@@ -36,6 +39,9 @@ exports.createReminder = async (req, res) => {
         { title, details, reminderTime, updatedBy: req.user.role, updatedAt: Date.now() },
         { new: true }
       );
+      if (!reminder) {
+        return res.status(404).json({ message: 'Reminder not found' });
+      }
       res.status(200).json(reminder);
     } catch (error) {
       res.status(500).json({ message: 'Error updating reminder', error });
@@ -46,6 +52,9 @@ exports.createReminder = async (req, res) => {
     try {
       const { id } = req.params;
       await MedicationReminder.findByIdAndDelete(id);
+      if (!reminder) {
+        return res.status(404).json({ message: 'Reminder not found' });
+      }
       res.status(200).json({ message: 'Reminder deleted successfully' });
     } catch (error) {
       res.status(500).json({ message: 'Error deleting reminder', error });
