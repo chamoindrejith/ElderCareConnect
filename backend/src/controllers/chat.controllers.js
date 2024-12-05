@@ -44,7 +44,15 @@ exports.saveMessage = async (req, res) => {
       
       console.log(`Location shared by ${senderId} to ${receiverId}:`, location);
   
-  
+      if (io) {
+        console.log(`Emitting location to receiver ID: ${receiverId}`);
+        io.to(receiverId).emit('locationShared', {
+          senderId,
+          location,
+        });
+      } else {
+        console.error("Socket.IO instance is not initialized.");
+      }
       
     } catch (error) {
       
