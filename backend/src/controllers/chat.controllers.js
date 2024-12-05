@@ -42,6 +42,8 @@ exports.saveMessage = async (req, res) => {
     try {
       const { senderId, receiverId, location } = req.body;
       
+      console.log(`Location shared by ${senderId} to ${receiverId}:`, location);
+  
   
       
     } catch (error) {
