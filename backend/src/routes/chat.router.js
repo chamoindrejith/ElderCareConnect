@@ -11,6 +11,7 @@ router.get('/history/:senderId/:receiverId', authenticateToken, chatController.g
 
 router.post('/send', authenticateToken, chatController.saveMessage);
 
+router.post('/location', authenticateToken, chatController.shareLocation);
 
 
 module.exports = router;
