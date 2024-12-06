@@ -63,7 +63,7 @@ exports.saveMessage = async (req, res) => {
 
   exports.shareReminders = async (req, res) => {
     try {
-      
+      const { senderId, receiverId, reminderIds } = req.body;
     } catch (error) {
       console.error('Error Sharing Remiders : ', error);
       res.status(500).json({ message: 'Error sharing reminders', error });
