@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose =require('mongoose');
 
 const healthRecordSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -11,5 +11,5 @@ const healthRecordSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now }
 });
 
-const HealthRecord = mongoose.model('HealthRecord', healthRecordSchema);
-export default HealthRecord;
+module.exports = mongoose.model('HealthRecord', healthRecordSchema);
+

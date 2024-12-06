@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose =require('mongoose');
 
 const locationTrackingSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -8,5 +8,5 @@ const locationTrackingSchema = new mongoose.Schema({
   emergencyStatus: { type: Boolean, default: false }
 });
 
-const LocationTracking = mongoose.model('LocationTracking', locationTrackingSchema);
-export default LocationTracking;
+module.exports = mongoose.model('LocationTracking', locationTrackingSchema);
+

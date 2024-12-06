@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose =require('mongoose');
 
 const healthReportSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -8,5 +8,5 @@ const healthReportSchema = new mongoose.Schema({
   medicationAdherence: { type: String }
 });
 
-const HealthReport = mongoose.model('HealthReport', healthReportSchema);
-export default HealthReport;
+module.exports = mongoose.model('HealthReport', healthReportSchema);
+
