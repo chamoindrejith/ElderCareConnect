@@ -87,6 +87,12 @@ exports.saveMessage = async (req, res) => {
       });
   
       await message.save();
+
+      res.status(201).json({
+        message: 'Reminders shared successfully',
+        data: message,
+      });
+      
     } catch (error) {
       console.error('Error Sharing Remiders : ', error);
       res.status(500).json({ message: 'Error sharing reminders', error });
