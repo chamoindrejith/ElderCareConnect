@@ -13,5 +13,7 @@ router.post('/send', authenticateToken, chatController.saveMessage);
 
 router.post('/location', authenticateToken, chatController.shareLocation);
 
+router.post('/shareReminders', authenticateToken, chatController.shareReminders);
+
 
 module.exports = router;
