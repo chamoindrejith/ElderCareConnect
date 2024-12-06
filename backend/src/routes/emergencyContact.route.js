@@ -6,4 +6,5 @@ router.post('/',  emergencyContactContoller.createContact);         // Create a 
 router.get('/', emergencyContactContoller.getContacts);  
 router.get('/:id', emergencyContactContoller.getContactById);
 
+
 module.exports = router;
