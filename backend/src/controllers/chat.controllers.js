@@ -1,5 +1,5 @@
 const Message = require('../models/chat.js');
-
+const MedicationReminder = require('../models/medicationReminder.js')
 exports.getChatHistory = async (req, res) => {
     try {
       const { senderId, receiverId } = req.params;
@@ -57,6 +57,45 @@ exports.saveMessage = async (req, res) => {
     } catch (error) {
       console.error("Error sharing location:", error);
       res.status(500).json({ message: "Failed to share location.", error });
+    }
+  };
+  
+
+  exports.shareReminders = async (req, res) => {
+    try {
+      const { senderId, receiverId, reminderIds } = req.body;
+
+      const reminders = await MedicationReminder.find({
+        _id: { $in: reminderIds },
+      });
+  
+      if (reminders.length === 0) {
+        return res.status(404).json({ message: 'No valid reminders found to share' });
+      }
+  
+      const reminderText = reminders
+      .map(
+        (reminder) =>
+          `Title: ${reminder.title}\nDetails: ${reminder.details}\nTime: ${reminder.reminderTime}`
+      )
+      .join('\n\n');
+
+      const message = new Message({
+        sender: senderId,
+        receiver: receiverId,
+        text: `Shared Medication Reminders:\n\n${reminderText}`, // Include reminders in text
+      });
+  
+      await message.save();
+
+      res.status(201).json({
+        message: 'Reminders shared successfully',
+        data: message,
+      });
+      
+    } catch (error) {
+      console.error('Error Sharing Remiders : ', error);
+      res.status(500).json({ message: 'Error sharing reminders', error });
     }
   };
   
