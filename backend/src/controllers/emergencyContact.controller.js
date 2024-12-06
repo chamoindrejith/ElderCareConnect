@@ -1,4 +1,4 @@
-const EmergencyContact = require('../models/emergencyContact.js');
+const EmergencyContact=require('../models/emergencyContact');
 
 exports.createContact = async (req, res) => {
   try {
@@ -47,3 +47,4 @@ exports.getContactById = async (req, res) => {
     res.status(500).json({ message: 'Error fetching contact', error });
   }
 };
+
