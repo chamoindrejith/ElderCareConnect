@@ -26,9 +26,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
+
 database.connectDB();
 
-app.use('/api', routes);
+app.use('/api',routes);
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
