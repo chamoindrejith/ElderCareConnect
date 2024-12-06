@@ -65,7 +65,7 @@ exports.saveMessage = async (req, res) => {
     try {
       
     } catch (error) {
-      
+      console.error('Error Sharing Remiders : ', error);
     }
   };
   
