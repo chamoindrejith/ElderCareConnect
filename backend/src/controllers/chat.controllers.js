@@ -1,5 +1,5 @@
 const Message = require('../models/chat.js');
-
+const MedicationReminder = require('../models/medicationReminder.js')
 exports.getChatHistory = async (req, res) => {
     try {
       const { senderId, receiverId } = req.params;
@@ -57,6 +57,15 @@ exports.saveMessage = async (req, res) => {
     } catch (error) {
       console.error("Error sharing location:", error);
       res.status(500).json({ message: "Failed to share location.", error });
+    }
+  };
+  
+
+  exports.shareReminders = async (req, res) => {
+    try {
+      
+    } catch (error) {
+      
     }
   };
   
