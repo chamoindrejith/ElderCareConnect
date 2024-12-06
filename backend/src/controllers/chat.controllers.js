@@ -79,6 +79,14 @@ exports.saveMessage = async (req, res) => {
           `Title: ${reminder.title}\nDetails: ${reminder.details}\nTime: ${reminder.reminderTime}`
       )
       .join('\n\n');
+
+      const message = new Message({
+        sender: senderId,
+        receiver: receiverId,
+        text: `Shared Medication Reminders:\n\n${reminderText}`, // Include reminders in text
+      });
+  
+      await message.save();
     } catch (error) {
       console.error('Error Sharing Remiders : ', error);
       res.status(500).json({ message: 'Error sharing reminders', error });
