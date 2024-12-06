@@ -64,6 +64,15 @@ exports.saveMessage = async (req, res) => {
   exports.shareReminders = async (req, res) => {
     try {
       const { senderId, receiverId, reminderIds } = req.body;
+
+      const reminders = await MedicationReminder.find({
+        _id: { $in: reminderIds },
+      });
+  
+      if (reminders.length === 0) {
+        return res.status(404).json({ message: 'No valid reminders found to share' });
+      }
+  
     } catch (error) {
       console.error('Error Sharing Remiders : ', error);
       res.status(500).json({ message: 'Error sharing reminders', error });
