@@ -73,6 +73,12 @@ exports.saveMessage = async (req, res) => {
         return res.status(404).json({ message: 'No valid reminders found to share' });
       }
   
+      const reminderText = reminders
+      .map(
+        (reminder) =>
+          `Title: ${reminder.title}\nDetails: ${reminder.details}\nTime: ${reminder.reminderTime}`
+      )
+      .join('\n\n');
     } catch (error) {
       console.error('Error Sharing Remiders : ', error);
       res.status(500).json({ message: 'Error sharing reminders', error });
