@@ -151,7 +151,39 @@ exports.getContacts = async (req, res) => {
     }
   };
 
+  exports.getUserProfile = async (req, res) => {
+    try {
+      const { userId } = req.params;
   
+      const user = await User.findById(userId);
+      if (!user) return res.status(404).json({ message: 'User not found' });
+  
+      
+      const relatedUsers = await User.find({ NIC: { $in: user.relationships } });
+  
+      res.status(200).json({
+        userDetails: {
+          username: user.username,
+          role: user.role,
+          email: user.email,
+          phone: user.phone,
+          dateOfBirth:user.dateOfBirth,
+          address: user.address
+        },
+        relationships: relatedUsers.map(({ username, role, email, phone, dateOfBirth, address}) => ({
+          username,
+          role,
+          email,
+          phone,
+          dateOfBirth,
+          address
+        })),
+      });
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching user profile', error: error.message });
+    }
+  };
+
 //update user
 async function updateUser(req, res) {
     const { userId } = req.params; // Assume user ID is passed as a URL parameter
