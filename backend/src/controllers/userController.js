@@ -4,37 +4,57 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config();
 
 //user reegistration
- async function register(req,res){
-    const{ username, password,email,dateOfBirth,contactInfo,address, role}=req.body;
-    const saltRound=10;
+//  async function register(req,res){
+//     const{ username, password,email,dateOfBirth,contactInfo,address, role}=req.body;
+//     const saltRound=10;
 
 
-try{
-    const existinguser = await User.findOne({email});
-    if(existinguser){
-        return res.status(400).json({ message: 'User already exists' });
-    }
+// try{
+//     const existinguser = await User.findOne({email});
+//     if(existinguser){
+//         return res.status(400).json({ message: 'User already exists' });
+//     }
 
-    const passwordHash = bcrypt.hashSync(password,saltRound);
+//     const passwordHash = bcrypt.hashSync(password,saltRound);
 
-    const newUser = new User({
-        username,
-        password:passwordHash,
-        email,
-        dateOfBirth,
-        contactInfo,
-        address,
-        role
+//     const newUser = new User({
+//         username,
+//         password:passwordHash,
+//         email,
+//         dateOfBirth,
+//         contactInfo,
+//         address,
+//         role
 
-    })
+//     })
     
-    await newUser.save()
-    console.log("Received data:",req.body);
+//     await newUser.save()
+//     console.log("Received data:",req.body);
 
-          res.status(201).json({ message: "User created successfully!" });
-    }catch(error)  {
-        res.status(500).json({ message: "Error creating user!" ,error: error.message});
-    }
+//           res.status(201).json({ message: "User created successfully!" });
+//     }catch(error)  {
+//         res.status(500).json({ message: "Error creating user!" ,error: error.message});
+//     }
+// }
+
+async function register(req,res){
+    try {
+        const { username, password, role, NIC, dateOfBirth, address, email, phone, relationships } = req.body;
+    
+        
+        const existingUser = await User.findOne({ $or: [{ username }, { NIC }, { email }] });
+        if (existingUser) {
+          return res.status(400).json({ message: 'Username, NIC, or Email already taken' });
+        }
+    
+        
+        const newUser = new User({ username, password, role, NIC, dateOfBirth, address, email, phone, relationships });
+        await newUser.save();
+    
+        res.status(201).json({ message: 'User registered successfully' });
+      } catch (error) {
+        res.status(500).json({ message: 'Error registering user', error: error.message });
+      }
 }
 
 //user login
