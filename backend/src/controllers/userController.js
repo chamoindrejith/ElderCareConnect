@@ -130,7 +130,8 @@ async function login(req, res) {
       }
 }
 
-exports.getContacts = async (req, res) => {
+async function getContacts(req, res) {
+//exports.getContacts = async (req, res) => {
     try {
       const { userId } = req.params;
       const user = await User.findById(userId);
@@ -151,7 +152,8 @@ exports.getContacts = async (req, res) => {
     }
   };
 
-  exports.getUserProfile = async (req, res) => {
+  async function getUserProfile(req, res) {
+  //exports.getUserProfile = async (req, res) => {
     try {
       const { userId } = req.params;
   
@@ -262,4 +264,5 @@ async function deleteUser(req, res) {
     }
 }
 
-module.exports = { register, login,updateUser,deleteUser};
+//module.exports = { register, login,updateUser,deleteUser};
+module.exports = { register, login, updateUser, deleteUser, getUserProfile, getContacts };
