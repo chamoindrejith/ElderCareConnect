@@ -1,6 +1,9 @@
 const MedicationReminder = require('../models/medicationReminder.js');
 const User = require('../models/User.js');
 
+const hasPermission = async (userId, reminder) => {
+    
+}
 exports.createReminder = async (req, res) => {
     try {
       const { title, details, reminderTime } = req.body;
