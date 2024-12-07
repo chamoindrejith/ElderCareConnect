@@ -63,9 +63,10 @@ exports.createReminder = async (req, res) => {
       return res.status(404).json({ message: 'Reminder not found' });
     }
       
-      if (!reminder) {
-        return res.status(404).json({ message: 'Reminder not found' });
-      }
+    if (!(await hasPermission(req.user.NIC, reminder))) {
+      return res.status(403).json({ message: 'You do not have permission to update this reminder' });
+    }
+      
       res.status(200).json(reminder);
     } catch (error) {
       res.status(500).json({ message: 'Error updating reminder', error });
