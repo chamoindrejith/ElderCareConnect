@@ -41,7 +41,9 @@ exports.createReminder = async (req, res) => {
 
       const relatedUserIds = relatedUsers.map((relatedUser) => relatedUser._id);
 
-      const reminders = await MedicationReminder.find();
+      const reminders = await MedicationReminder.find({
+        createdBy: { $in: relatedUserIds },
+      });
       if (!reminders) {
         return res.status(404).json({ message: 'Reminder not found' });
       }
