@@ -57,11 +57,12 @@ exports.createReminder = async (req, res) => {
     try {
       const { id } = req.params;
       const { title, details, reminderTime } = req.body;
-      const reminder = await MedicationReminder.findByIdAndUpdate(
-        id,
-        { title, details, reminderTime, updatedBy: req.user.role, updatedAt: Date.now() },
-        { new: true }
-      );
+
+      const reminder = await MedicationReminder.findById(id);
+    if (!reminder) {
+      return res.status(404).json({ message: 'Reminder not found' });
+    }
+      
       if (!reminder) {
         return res.status(404).json({ message: 'Reminder not found' });
       }
