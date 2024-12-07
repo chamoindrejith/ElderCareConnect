@@ -1,5 +1,5 @@
 const MedicationReminder = require('../models/medicationReminder.js');
-
+const User = require('../models/User.js');
 
 exports.createReminder = async (req, res) => {
     try {
