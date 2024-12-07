@@ -1,87 +1,115 @@
-const User=require("../models/User");
-const bcrypt =require("bcrypt")
-const jwt = require("jsonwebtoken");
+// const bcrypt = require('bcryptjs');
+// const jwt = require('jsonwebtoken');
+// const User = require('../models/User');
+// require('dotenv').config();
+
+// exports.registerUser = async (req, res) => {
+//   try {
+//     const { username, password, role, NIC, dateOfBirth, address, email, phone, relationships } = req.body;
+
+//     // Check if the user already exists
+//     const existingUser = await User.findOne({ $or: [{ username }, { NIC }, { email }] });
+//     if (existingUser) {
+//       return res.status(400).json({ message: 'Username, NIC, or Email already taken' });
+//     }
+
+//     // Create and save the new user
+//     const newUser = new User({ username, password, role, NIC, dateOfBirth, address, email, phone, relationships });
+//     await newUser.save();
+
+//     res.status(201).json({ message: 'User registered successfully' });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error registering user', error: error.message });
+//   }
+// };
 
 
-//user reegistration
- async function register(req,res){
-    const{ username, password,email,dateOfBirth,contactInfo,address, role}=req.body;
-    const saltRound=10;
+// // Login a user
+// exports.loginUser = async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
 
+//     // Find the user by username
+//     const user = await User.findOne({ username });
+//     if (!user) {
+//       return res.status(400).json({ message: 'Invalid credentials' });
+//     }
 
-try{
-    const existinguser = await User.findOne({email});
-    if(existinguser){
-        return res.status(400).json({ message: 'User already exists' });
+//     // Check if the provided password is correct
+//     const isPasswordValid = await bcrypt.compare(password, user.password);
+//     if (!isPasswordValid) {
+//       return res.status(400).json({ message: 'Invalid credentials' });
+//     }
+
+//     // Generate a JWT token
+//     const token = jwt.sign(
+//       { userId: user._id, role: user.role },
+//       process.env.JWT_SECRET,
+//       { expiresIn: '1h' }
+//     );
+
+//     res.json({ message: 'Login successful', token });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error logging in', error });
+//   }
+// };
+
+// Fetch contacts based on user role
+exports.getContacts = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    let contacts;
+    if (user.role === 'elderly') {
+      // Elderly users can chat with caregivers
+      contacts = await User.find({ role: 'caregiver' });
+    } else if (user.role === 'caregiver') {
+      // Caregivers can chat with elderly users
+      contacts = await User.find({ role: 'elderly' });
     }
 
-    const passwordHash = bcrypt.hashSync(password,saltRound);
+    res.status(200).json(contacts);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching contacts', error });
+  }
+};
 
-    const newUser = new User({
+
+exports.getUserProfile = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Find the user
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    // Fetch related users based on NICs
+    const relatedUsers = await User.find({ NIC: { $in: user.relationships } });
+
+    res.status(200).json({
+      userDetails: {
+        username: user.username,
+        role: user.role,
+        email: user.email,
+        phone: user.phone,
+        dateOfBirth:user.dateOfBirth,
+        address: user.address
+      },
+      relationships: relatedUsers.map(({ username, role, email, phone, dateOfBirth, address}) => ({
         username,
-        password:passwordHash,
+        role,
         email,
+        phone,
         dateOfBirth,
-        contactInfo,
-        address,
-        role
-
-    })
-    
-    await newUser.save()
-    console.log("Received data:",req.body);
-
-          res.status(201).json({ message: "User created successfully!" });
-    }catch(error)  {
-        res.status(500).json({ message: "Error creating user!" ,error: error.message});
-    }
-}
-
-//user login
-async function login(req, res) {
-    const { username, password } = req.body;
-
-    try {
-        // Validate input
-        if (!username || !password) {
-            return res.status(400).json({ message: "username and password are required" });
-        }
-
-        // Find user by username
-        const user = await User.findOne({ username });
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        // Compare passwords
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
-
-        // Generate a token
-        const token = jwt.sign(
-            { userId: user._id, role: user.role },
-            process.env.JWT_SECRET || "your_jwt_secret", // Use environment variable
-            { expiresIn: "1h" }
-        );
-
-        // Respond with token and user details
-        res.status(200).json({
-            message: "Login successful",
-            token,
-            user: {
-                id: user._id,
-                username: user.username,
-                email: user.email,
-                role: user.role,
-            },
-        });
-    } catch (error) {
-        console.error("Login error:", error.message);
-        res.status(500).json({ message: "Error logging in!", error: error.message });
-    }
-}
+        address
+      })),
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user profile', error: error.message });
+  }
+};
 
 //update user
 async function updateUser(req, res) {
