@@ -9,7 +9,8 @@ const hasPermission = async (userId, reminder) => {
 
       return user.relationships.some((relatedNIC) => relatedNIC === reminder.createdBy);
 
-}
+};
+
 exports.createReminder = async (req, res) => {
     try {
       const { title, details, reminderTime } = req.body;
@@ -17,8 +18,8 @@ exports.createReminder = async (req, res) => {
         title,
         details,
         reminderTime,
-        createdBy: req.user.role,
-        updatedBy: req.user.role
+        createdBy: req.user._id,
+        updatedBy: req.user._id
       });
       await reminder.save();
       res.status(201).json(reminder);
