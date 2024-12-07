@@ -130,6 +130,28 @@ async function login(req, res) {
       }
 }
 
+exports.getContacts = async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const user = await User.findById(userId);
+      if (!user) return res.status(404).json({ message: 'User not found' });
+  
+      let contacts;
+      if (user.role === 'elderly') {
+        // Elderly users can chat with caregivers
+        contacts = await User.find({ role: 'caregiver' });
+      } else if (user.role === 'caregiver') {
+        // Caregivers can chat with elderly users
+        contacts = await User.find({ role: 'elderly' });
+      }
+  
+      res.status(200).json(contacts);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching contacts', error });
+    }
+  };
+
+  
 //update user
 async function updateUser(req, res) {
     const { userId } = req.params; // Assume user ID is passed as a URL parameter
