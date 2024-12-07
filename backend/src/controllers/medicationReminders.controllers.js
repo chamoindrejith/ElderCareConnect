@@ -7,6 +7,8 @@ const hasPermission = async (userId, reminder) => {
       const user = await User.findOne({ NIC: userId });  // Query using NIC instead of _id
       if (!user) return false;
 
+      return user.relationships.some((relatedNIC) => relatedNIC === reminder.createdBy);
+
 }
 exports.createReminder = async (req, res) => {
     try {
