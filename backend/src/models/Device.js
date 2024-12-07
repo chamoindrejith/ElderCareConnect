@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose =require('mongoose');
 
 const deviceSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -7,5 +7,5 @@ const deviceSchema = new mongoose.Schema({
   lastSyncTime: { type: Date, default: Date.now }
 });
 
-const Device = mongoose.model('Device', deviceSchema);
-export default Device;
+module.exports = mongoose.model('Device', deviceSchema);
+

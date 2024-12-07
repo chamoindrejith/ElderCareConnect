@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose')
+
 
 const emergencyContactSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -8,5 +9,6 @@ const emergencyContactSchema = new mongoose.Schema({
   email: { type: String }
 });
 
-const EmergencyContact = mongoose.model('EmergencyContact', emergencyContactSchema);
-export default EmergencyContact;
+
+module.exports = mongoose.model('EmergencyContact', emergencyContactSchema);
+

@@ -9,6 +9,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const { initSocket } = require('./src/controllers/chat.controllers.js');
 
+
 const port = process.env.PORT;
 
 const server = http.createServer(app);
@@ -25,9 +26,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
+
 database.connectDB();
 
-app.use('/api', routes);
+app.use('/api',routes);
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);

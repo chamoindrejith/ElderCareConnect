@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose =require('mongoose');
 
 const alertSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -8,5 +8,5 @@ const alertSchema = new mongoose.Schema({
   status: { type: String, enum: ['active', 'resolved'], default: 'active' }
 });
 
-const Alert = mongoose.model('Alert', alertSchema);
-export default Alert;
+module.exports = mongoose.model('Alert', alertSchema);
+
