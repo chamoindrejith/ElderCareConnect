@@ -2,7 +2,10 @@ const MedicationReminder = require('../models/medicationReminder.js');
 const User = require('../models/User.js');
 
 const hasPermission = async (userId, reminder) => {
-  if (reminder.createdBy === userId) return true;
+      if (reminder.createdBy === userId) return true;
+
+      const user = await User.findOne({ NIC: userId });  // Query using NIC instead of _id
+      if (!user) return false;
 
 }
 exports.createReminder = async (req, res) => {
