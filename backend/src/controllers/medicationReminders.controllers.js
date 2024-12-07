@@ -67,6 +67,13 @@ exports.createReminder = async (req, res) => {
       return res.status(403).json({ message: 'You do not have permission to update this reminder' });
     }
       
+    reminder.title = title;
+    reminder.details = details;
+    reminder.reminderTime = reminderTime;
+    reminder.updatedBy = req.user._id;  
+    reminder.updatedAt = Date.now();
+
+    
       res.status(200).json(reminder);
     } catch (error) {
       res.status(500).json({ message: 'Error updating reminder', error });
