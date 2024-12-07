@@ -74,12 +74,14 @@ exports.createReminder = async (req, res) => {
     reminder.updatedAt = Date.now();
 
     await reminder.save();
-    
+
       res.status(200).json(reminder);
     } catch (error) {
       res.status(500).json({ message: 'Error updating reminder', error });
     }
   };
+
+
 
   exports.deleteReminder = async (req, res) => {
     try {
@@ -88,6 +90,13 @@ exports.createReminder = async (req, res) => {
       if (!reminder) {
         return res.status(404).json({ message: 'Reminder not found' });
       }
+
+      if (reminder.createdBy.toString() !== req.user._id.toString()) {
+        return res.status(403).json({ message: 'You do not have permission to delete this reminder' });
+      }
+  
+      await reminder.deleteOne();
+      
       res.status(200).json({ message: 'Reminder deleted successfully' });
     } catch (error) {
       res.status(500).json({ message: 'Error deleting reminder', error });
