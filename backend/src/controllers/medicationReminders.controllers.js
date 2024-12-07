@@ -36,6 +36,9 @@ exports.createReminder = async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
 
+      const relatedNICs = [user.NIC, ...(user.relationships || [])];
+      const relatedUsers = await User.find({ NIC: { $in: relatedNICs } }).select('_id');
+
       const reminders = await MedicationReminder.find();
       if (!reminders) {
         return res.status(404).json({ message: 'Reminder not found' });
