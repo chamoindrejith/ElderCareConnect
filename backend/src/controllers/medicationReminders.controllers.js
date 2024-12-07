@@ -73,6 +73,7 @@ exports.createReminder = async (req, res) => {
     reminder.updatedBy = req.user._id;  
     reminder.updatedAt = Date.now();
 
+    await reminder.save();
     
       res.status(200).json(reminder);
     } catch (error) {
