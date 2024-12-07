@@ -2,7 +2,8 @@ const MedicationReminder = require('../models/medicationReminder.js');
 const User = require('../models/User.js');
 
 const hasPermission = async (userId, reminder) => {
-    
+  if (reminder.createdBy === userId) return true;
+
 }
 exports.createReminder = async (req, res) => {
     try {
