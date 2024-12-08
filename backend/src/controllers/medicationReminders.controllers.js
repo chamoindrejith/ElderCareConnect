@@ -1,15 +1,39 @@
 const MedicationReminder = require('../models/medicationReminder.js');
 const User = require('../models/User.js');
 
-const hasPermission = async (userId, reminder) => {
-      if (reminder.createdBy === userId) return true;
+// const hasPermission = async (userId, reminder) => {
+//       if (reminder.createdBy === userId) return true;
 
-      const user = await User.findOne({ NIC: userId });  // Query using NIC instead of _id
-      if (!user) return false;
+//       const user = await User.findOne({ NIC: userId });  // Query using NIC instead of _id
+//       if (!user) return false;
 
-      return user.relationships.some((relatedNIC) => relatedNIC === reminder.createdBy);
+//       return user.relationships.some((relatedNIC) => relatedNIC === reminder.createdBy);
 
+// };
+
+const hasPermission = async (userNIC, reminder) => {
+  console.log('Reminder Created By:', reminder.createdBy);
+  console.log('User NIC:', userNIC);
+
+  if (reminder.createdBy === userNIC) {
+      console.log('Permission granted: User is the creator');
+      return true;
+  }
+
+  const user = await User.findOne({ NIC: userNIC });
+  console.log('User:', user);
+
+  if (!user) {
+      console.log('No user found for NIC');
+      return false;
+  }
+
+  console.log('User Relationships:', user.relationships);
+  const isRelated = user.relationships.some((relatedNIC) => relatedNIC === reminder.createdBy);
+  console.log('Permission granted by relationship:', isRelated);
+  return isRelated;
 };
+
 
 exports.createReminder = async (req, res) => {
     try {
@@ -18,7 +42,8 @@ exports.createReminder = async (req, res) => {
         title,
         details,
         reminderTime,
-        createdBy: req.user._id,
+        //createdBy: req.user._id,
+        createdBy: req.user.NIC,
         updatedBy: req.user._id
       });
       await reminder.save();
@@ -53,33 +78,83 @@ exports.createReminder = async (req, res) => {
     }
   };
 
+  // exports.updateReminder = async (req, res) => {
+  //   try {
+  //     const { id } = req.params;
+  //     const { title, details, reminderTime } = req.body;
+
+  //     const reminder = await MedicationReminder.findById(id);
+  //   if (!reminder) {
+  //     return res.status(404).json({ message: 'Reminder not found' });
+  //   }
+      
+  //   if (!(await hasPermission(req.user.NIC, reminder))) {
+  //     return res.status(403).json({ message: 'You do not have permission to update this reminder' });
+  //   }
+      
+  //   reminder.title = title;
+  //   reminder.details = details;
+  //   reminder.reminderTime = reminderTime;
+  //   reminder.updatedBy = req.user._id;  
+  //   reminder.updatedAt = Date.now();
+
+  //   await reminder.save();
+
+  //     res.status(200).json(reminder);
+  //   } catch (error) {
+  //     res.status(500).json({ message: 'Error updating reminder', error });
+  //   }
+  // };
+
+
   exports.updateReminder = async (req, res) => {
     try {
-      const { id } = req.params;
-      const { title, details, reminderTime } = req.body;
+        const { id } = req.params;
+        const { title, details, reminderTime } = req.body;
 
-      const reminder = await MedicationReminder.findById(id);
-    if (!reminder) {
-      return res.status(404).json({ message: 'Reminder not found' });
-    }
-      
-    if (!(await hasPermission(req.user.NIC, reminder))) {
-      return res.status(403).json({ message: 'You do not have permission to update this reminder' });
-    }
-      
-    reminder.title = title;
-    reminder.details = details;
-    reminder.reminderTime = reminderTime;
-    reminder.updatedBy = req.user._id;  
-    reminder.updatedAt = Date.now();
+        
+        const reminder = await MedicationReminder.findById(id);
+        if (!reminder) {
+            return res.status(404).json({ message: 'Reminder not found' });
+        }
 
-    await reminder.save();
+       
+        const requestingUser = await User.findOne({ NIC: req.user.NIC });
+        if (!requestingUser) {
+            return res.status(404).json({ message: 'Requesting user not found' });
+        }
 
-      res.status(200).json(reminder);
+        const creatorUser = await User.findOne({ NIC: reminder.createdBy });
+        if (!creatorUser) {
+            return res.status(404).json({ message: 'Creator of the reminder not found' });
+        }
+
+    
+        const isPermitted =
+            reminder.createdBy === requestingUser.NIC || 
+            (requestingUser.role === 'elderly' && creatorUser.role === 'caregiver' && requestingUser.relationships.includes(reminder.createdBy)) ||
+            (requestingUser.role === 'caregiver' && creatorUser.role === 'elderly' && creatorUser.relationships.includes(requestingUser.NIC));
+
+        if (!isPermitted) {
+            return res.status(403).json({ message: 'You do not have permission to update this reminder' });
+        }
+
+        reminder.title = title;
+        reminder.details = details;
+        reminder.reminderTime = reminderTime;
+        reminder.updatedBy = req.user._id;
+        reminder.updatedAt = Date.now();
+
+        await reminder.save();
+
+        res.status(200).json(reminder);
     } catch (error) {
-      res.status(500).json({ message: 'Error updating reminder', error });
+        console.error('Error updating reminder:', error);
+        res.status(500).json({ message: 'Error updating reminder', error });
     }
-  };
+};
+
+
 
 
 
