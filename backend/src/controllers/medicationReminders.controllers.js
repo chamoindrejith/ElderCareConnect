@@ -158,22 +158,47 @@ exports.createReminder = async (req, res) => {
 
 
 
-  exports.deleteReminder = async (req, res) => {
-    try {
-      const { id } = req.params;
-      await MedicationReminder.findByIdAndDelete(id);
-      if (!reminder) {
-        return res.status(404).json({ message: 'Reminder not found' });
-      }
+  // exports.deleteReminder = async (req, res) => {
+  //   try {
+  //     const { id } = req.params;
+  //     await MedicationReminder.findByIdAndDelete(id);
+  //     if (!reminder) {
+  //       return res.status(404).json({ message: 'Reminder not found' });
+  //     }
 
-      if (reminder.createdBy.toString() !== req.user._id.toString()) {
-        return res.status(403).json({ message: 'You do not have permission to delete this reminder' });
-      }
+  //     if (reminder.createdBy.toString() !== req.user._id.toString()) {
+  //       return res.status(403).json({ message: 'You do not have permission to delete this reminder' });
+  //     }
   
-      await reminder.deleteOne();
+  //     await reminder.deleteOne();
       
-      res.status(200).json({ message: 'Reminder deleted successfully' });
+  //     res.status(200).json({ message: 'Reminder deleted successfully' });
+  //   } catch (error) {
+  //     res.status(500).json({ message: 'Error deleting reminder', error });
+  //   }
+  // };
+
+  
+exports.deleteReminder = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+       
+        const reminder = await MedicationReminder.findById(id);
+        if (!reminder) {
+            return res.status(404).json({ message: 'Reminder not found' });
+        }
+
+        if (reminder.createdBy !== req.user.NIC) {
+            return res.status(403).json({ message: 'You do not have permission to delete this reminder' });
+        }
+
+      
+        await reminder.deleteOne();
+
+        res.status(200).json({ message: 'Reminder deleted successfully' });
     } catch (error) {
-      res.status(500).json({ message: 'Error deleting reminder', error });
+        console.error('Error deleting reminder:', error);
+        res.status(500).json({ message: 'Error deleting reminder', error: error.message || error });
     }
-  };
+};
