@@ -8,7 +8,8 @@ const routes = require('../backend/src/routes/index.js');
 const http = require('http');
 const socketIo = require('socket.io');
 const { initSocket } = require('./src/controllers/chat.controllers.js');
-
+const {sendNotification} = require('./src/controllers/notificationController.js');
+const { initializeApp, cert } = require('firebase-admin/app');
 
 const port = process.env.PORT;
 
@@ -21,12 +22,26 @@ initSocket(io);
 require('./socket.js')(io);
 
 app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+}));
+
+// Firebase Admin SDK Initialization
+initializeApp({
+  credential: cert(require('./firebase/firebase-service-account.json')),
+  projectId: process.env.FIREBASE_PROJECT_ID,
+});
+
+
+
+
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
-
+app.post('/send', sendNotification);
 database.connectDB();
 
 app.use('/api',routes);
