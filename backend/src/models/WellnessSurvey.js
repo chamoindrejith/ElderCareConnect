@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose =require('mongoose');
 
 const wellnessSurveySchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -7,5 +7,5 @@ const wellnessSurveySchema = new mongoose.Schema({
   responses: [String]
 });
 
-const WellnessSurvey = mongoose.model('WellnessSurvey', wellnessSurveySchema);
-export default WellnessSurvey;
+module.exports = mongoose.model('WellnessSurvey', wellnessSurveySchema);
+

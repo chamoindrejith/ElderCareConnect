@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose =require('mongoose');
 
 const userSettingsSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -9,5 +9,5 @@ const userSettingsSchema = new mongoose.Schema({
   languagePreference: { type: String, default: 'English' }
 });
 
-const UserSettings = mongoose.model('UserSettings', userSettingsSchema);
-export default UserSettings;
+module.exports = mongoose.model('UserSettings', userSettingsSchema);
+

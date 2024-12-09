@@ -1,4 +1,8 @@
-# ElderCare Connect  
+# <img src="LOGOD.png" alt="ElderCareConnect Logo" width="125" style="vertical-align: middle;"/> ElderCare Connect 
+
+
+A **Progressive Web Application (PWA)** designed to support elderly individuals living alone by enhancing safety, health monitoring, and social engagement.
+
 A **Progressive Web Application (PWA)** designed to support elderly individuals living alone by enhancing safety, health monitoring, and social engagement.  
 
 ---
