@@ -3,17 +3,17 @@ import CaregiverList from "./CaregiverList";
 import MessageInput from "./MessageInput";
 
 const ChatInterface = () => {
-  const [messages, setMessages] = useState([]); // Store messages
+  const [messages, setMessages] = useState([]); 
   const [currentCaregiver, setCurrentCaregiver] = useState("Caregiver 1");
 
-  // Fetch existing chat history
+ 
   useEffect(() => {
     fetch(`/api/chat/${currentCaregiver}`)
       .then((response) => response.json())
       .then((data) => setMessages(data.messages || []));
   }, [currentCaregiver]);
 
-  // Send a new message
+  
   const sendMessage = (newMessage) => {
     const message = {
       sender: "elder", // or "caregiver"
@@ -22,7 +22,7 @@ const ChatInterface = () => {
     };
     setMessages((prev) => [...prev, message]);
 
-    // Send to backend
+   
     fetch(`/api/chat/${currentCaregiver}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
