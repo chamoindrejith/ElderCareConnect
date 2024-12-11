@@ -9,5 +9,7 @@ router.post('/', locationTrackingController.addLocation);
 router.get('/user/:userId', locationTrackingController.getUserLocations);
 
 
+// Get nearby locations
+router.get('/nearby', locationTrackingController.getNearbyLocations);
 
 module.exports = router;
