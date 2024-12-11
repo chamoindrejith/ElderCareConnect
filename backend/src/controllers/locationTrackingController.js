@@ -33,6 +33,30 @@ exports.getUserLocations = async (req, res) => {
   }
 };
 
+// Get nearby locations
+exports.getNearbyLocations = async (req, res) => {
+  try {
+    const { longitude, latitude, maxDistance } = req.query;
+
+    const locations = await LocationTracking.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [parseFloat(longitude), parseFloat(latitude)],
+          },
+          $maxDistance: parseInt(maxDistance, 10),
+        },
+      },
+    });
+
+    res.status(200).json(locations);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 
 
 
