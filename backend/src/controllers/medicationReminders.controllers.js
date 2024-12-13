@@ -1,5 +1,7 @@
 const MedicationReminder = require('../models/medicationReminder.js');
 const User = require('../models/User.js');
+const cron = require('node-cron');
+const { emitReminder } = require('../../socket.js');
 
 // const hasPermission = async (userId, reminder) => {
 //       if (reminder.createdBy === userId) return true;
@@ -10,6 +12,29 @@ const User = require('../models/User.js');
 //       return user.relationships.some((relatedNIC) => relatedNIC === reminder.createdBy);
 
 // };
+
+// Schedule Cron Job to Check for Upcoming Reminders
+cron.schedule('* * * * *', async () => {
+  const now = new Date();
+  const fiveMinutesLater = new Date(now.getTime() + 5 * 60 * 1000); // 5 minutes later
+
+  const reminders = await MedicationReminder.find({
+      reminderTime: { $gte: now, $lte: fiveMinutesLater },
+      isSent: false,
+  });
+
+  for (const reminder of reminders) {
+      emitReminder({
+          title: reminder.title,
+          details: reminder.details,
+          reminderTime: reminder.reminderTime,
+      });
+
+      reminder.isSent = true; // Mark reminder as sent
+      await reminder.save();
+  }
+});
+
 
 const hasPermission = async (userNIC, reminder) => {
   console.log('Reminder Created By:', reminder.createdBy);
