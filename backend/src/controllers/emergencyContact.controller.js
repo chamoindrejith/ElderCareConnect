@@ -1,50 +1,72 @@
 const EmergencyContact=require('../models/emergencyContact');
 
-exports.createContact = async (req, res) => {
+exports.getEmergencyContacts = async (req, res) => {
   try {
-    const { name, contactNumber, email, userId } = req.body;
+    // Fetch all emergency contacts
+    const contacts = await EmergencyContact.find();
 
-    // Validate required fields
-    if (!name || !contactNumber || !email || !userId) {
-      return res.status(400).json({ message: 'All fields are required.' });
+    // Respond with the retrieved contacts
+    res.status(200).json({
+      success: true,
+      message: 'Emergency contacts retrieved successfully',
+      data: contacts
+    });
+  } catch (error) {
+    // Handle errors
+    console.error('Error fetching emergency contacts:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch emergency contacts',
+      error: error.message
+    });
+  }
+};
+
+// Endpoint to fetch emergency contacts and trigger an emergency call
+exports.getEmergencyContactsAndMakeCall = async (req, res) => {
+  try {
+    // Fetch emergency contacts for the user
+    const contacts = await EmergencyContact.find({ userId: req.user._id });
+
+    if (!contacts || contacts.length === 0) {
+      return res.status(404).json({ message: "No emergency contacts found." });
     }
 
-    // Create a new emergency contact
-    const contact = new EmergencyContact({
-      name,
-      contactNumber,
-      email,
-      userId,
+    // Example: Use the first contact for the call (can be extended for user choice)
+    const toNumber = contacts[0].contactNumber; // Updated to match `contactNumber` field in the schema
+
+    if (!toNumber) {
+      return res.status(400).json({ message: "Contact number is missing for the selected emergency contact." });
+    }
+
+    // Trigger a call using Twilio
+    client.calls
+      .create({
+        url: "http://demo.twilio.com/docs/voice.xml", // Replace with your XML file URL
+        to: toNumber,
+        from: process.env.TWILIO_PHONE_NUMBER, // Twilio phone number
+      })
+      .then((call) => {
+        console.log("Call initiated:", call.sid);
+        res.status(200).json({
+          message: "Call initiated successfully.",
+          contact: {
+            name: contacts[0].name,
+            relationship: contacts[0].relationship,
+            contactNumber: contacts[0].contactNumber,
+            email: contacts[0].email,
+          }, // Return the contacted person details
+        });
+      })
+      .catch((error) => {
+        console.error("Error making call:", error);
+        res.status(500).json({ message: "Failed to initiate call.", error });
+      });
+  } catch (error) {
+    console.error("Error fetching emergency contacts:", error);
+    res.status(500).json({
+      message: "Error fetching emergency contacts",
+      error,
     });
-
-    // Save the contact to the database
-    await contact.save();
-
-    // Respond with the created contact
-    res.status(201).json({ message: 'Contact created successfully', contact });
-  } catch (error) {
-    console.error('Error creating contact:', error.message);
-    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
-
-
-exports.getContacts = async (req, res) => {
-  try {
-    const contacts = await EmergencyContact.find();
-    res.status(200).json(contacts);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching contacts', error });
-  }
-};
-
-exports.getContactById = async (req, res) => {
-  try {
-    const contact = await EmergencyContact.findById(req.params.id);
-    if (!contact) return res.status(404).json({ message: 'Contact not found' });
-    res.status(200).json(contact);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching contact', error });
-  }
-};
-

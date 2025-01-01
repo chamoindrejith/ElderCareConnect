@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const  emergencyContactContoller  = require('../controllers/emergencyContact.controller.js');
+const  emergencyContactController  = require('../controllers/emergencyContact.controller.js');
+const { authenticateToken } = require('../middleware/auth.middleware'); // Middleware for authentication
 
-router.post('/',  emergencyContactContoller.createContact);         // Create a contact
-router.get('/', emergencyContactContoller.getContacts);  
-router.get('/:id', emergencyContactContoller.getContactById);
+// CRUD Endpoints for Emergency Contacts
+router.get('/', emergencyContactController.getEmergencyContacts); // Get all contacts 
+router.get('/call',authenticateToken,emergencyContactController.getEmergencyContactsAndMakeCall);
 
 
 module.exports = router;
