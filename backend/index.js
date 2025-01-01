@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const twilio = require("twilio");
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const database = require('../backend/src/db/dbconfig.js');
@@ -26,6 +27,12 @@ app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
 }));
+
+// Twilio credentials
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = twilio(accountSid, authToken);
+
 
 // Firebase Admin SDK Initialization
 initializeApp({
