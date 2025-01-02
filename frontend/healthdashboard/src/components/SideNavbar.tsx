@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { Nav } from "./ui/nav";
 import {
   LayoutDashboard,
-  Siren,
-  BellRing,
+  House,
+  UserRound,
   Settings,
   ChevronRight,
 } from "lucide-react";
@@ -41,21 +41,21 @@ export default function SideNavbar({}: Props) {
         isCollapsed={mobileWidth ? true : isCollapsed}
         links={[
           {
-            title: "Dashboard",
+            title: "Home",
             href: "/",
-            icon: LayoutDashboard,
+            icon: House,
             variant: "default",
           },
           {
-            title: "Emergency",
-            href: "/emergency",
-            icon: Siren,
+            title: "Dashboard",
+            href: "/dashboard",
+            icon: LayoutDashboard,
             variant: "ghost",
           },
           {
-            title: "Alerts",
-            href: "/alerts",
-            icon: BellRing,
+            title: "Profile",
+            href: "/profile",
+            icon: UserRound,
             variant: "ghost",
           },
           {
