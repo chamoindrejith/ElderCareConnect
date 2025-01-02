@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import './LocationTracking.css';
 
 export default function Home() {
   const [userId, setUserId] = useState('');
@@ -49,10 +50,10 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Location Tracking</h1>
 
-      <div>
+      <div className="section">
         <h2>Add Location</h2>
         <input
           type="text"
@@ -80,10 +81,10 @@ export default function Home() {
             onChange={(e) => setEmergencyStatus(e.target.checked)}
           />
         </label>
-        <button onClick={addLocation}>Add Location</button>
+        <button className="add-button" onClick={addLocation}>Add Location</button>
       </div>
 
-      <div>
+      <div className="section">
         <h2>Fetch User Locations</h2>
         <input
           type="text"
@@ -101,7 +102,7 @@ export default function Home() {
         </ul>
       </div>
 
-      <div>
+      <div className="section">
         <h2>Find Nearby Locations</h2>
         <input
           type="text"
