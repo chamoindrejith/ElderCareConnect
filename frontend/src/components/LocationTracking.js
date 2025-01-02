@@ -1,136 +1,63 @@
 import { useState } from 'react';
 import axios from 'axios';
-import './LocationTracking.css';
+import './Locationtracking.css';
 
-export default function Home() {
-  const [userId, setUserId] = useState('');
-  const [longitude, setLongitude] = useState('');
-  const [latitude, setLatitude] = useState('');
-  const [emergencyStatus, setEmergencyStatus] = useState(false);
-  const [locations, setLocations] = useState([]);
-  const [maxDistance, setMaxDistance] = useState('');
-  const [nearbyLocations, setNearbyLocations] = useState([]);
+const Home = () => {
+  const [location, setLocation] = useState(null);
+  const [error, setError] = useState(null);
 
-  const addLocation = async () => {
+  const updateLocation = async () => {
     try {
-      const response = await axios.post('/api/location-tracking', {
-        userId,
-        longitude: parseFloat(longitude),
-        latitude: parseFloat(latitude),
-        emergencyStatus,
+      // Use geolocation API to get current position
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        
+        // Hardcoded User ID, or you can get it from another source
+        const userId = 'user123'; // Replace with dynamic userId if needed
+        
+        // Send the location data to your API
+        const response = await axios.post('http://localhost:5000/api/update', { userId, longitude, latitude });
+        setLocation(response.data);
+        setError(null);
+      }, (err) => {
+        setError('Failed to get location: ' + err.message);
       });
-      alert('Location added successfully!');
-    } catch (error) {
-      alert('Error adding location: ' + error.message);
+    } catch (err) {
+      setError(err.response?.data?.error || 'Error updating location');
     }
   };
 
-  const fetchUserLocations = async () => {
+  const getLocation = async () => {
     try {
-      const response = await axios.get(`/api/location-tracking/user/${userId}`);
-      setLocations(response.data);
-    } catch (error) {
-      alert('Error fetching user locations: ' + error.message);
-    }
-  };
+      // Hardcoded User ID, or you can get it from another source
+      const userId = 'user123'; // Replace with dynamic userId if needed
 
-  const fetchNearbyLocations = async () => {
-    try {
-      const response = await axios.get('/api/location-tracking/nearby', {
-        params: {
-          longitude: parseFloat(longitude),
-          latitude: parseFloat(latitude),
-          maxDistance: parseInt(maxDistance, 10),
-        },
-      });
-      setNearbyLocations(response.data);
-    } catch (error) {
-      alert('Error fetching nearby locations: ' + error.message);
+      const response = await axios.get(`http://localhost:5000/api/user/${userId}`);
+      setLocation(response.data);
+      setError(null);
+    } catch (err) {
+      setError(err.response?.data?.error || 'Error fetching location');
     }
   };
 
   return (
     <div className="container">
-      <h1>Location Tracking</h1>
+      <h1>Live Location Tracker</h1>
+      
+      <button onClick={updateLocation} className="button">Get My Location</button>
+      <button onClick={getLocation} className="button">View Location</button>
 
-      <div className="section">
-        <h2>Add Location</h2>
-        <input
-          type="text"
-          placeholder="User ID"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Longitude"
-          value={longitude}
-          onChange={(e) => setLongitude(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Latitude"
-          value={latitude}
-          onChange={(e) => setLatitude(e.target.value)}
-        />
-        <label>
-          Emergency Status:
-          <input
-            type="checkbox"
-            checked={emergencyStatus}
-            onChange={(e) => setEmergencyStatus(e.target.checked)}
-          />
-        </label>
-        <button className="add-button" onClick={addLocation}>Add Location</button>
-      </div>
+      {error && <p className="error">{error}</p>}
 
-      <div className="section">
-        <h2>Fetch User Locations</h2>
-        <input
-          type="text"
-          placeholder="User ID"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-        />
-        <button onClick={fetchUserLocations}>Fetch Locations</button>
-        <ul>
-          {locations.map((loc) => (
-            <li key={loc._id}>
-              {loc.location.coordinates.join(', ')} - {new Date(loc.timestamp).toLocaleString()}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="section">
-        <h2>Find Nearby Locations</h2>
-        <input
-          type="text"
-          placeholder="Longitude"
-          value={longitude}
-          onChange={(e) => setLongitude(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Latitude"
-          value={latitude}
-          onChange={(e) => setLatitude(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Max Distance (meters)"
-          value={maxDistance}
-          onChange={(e) => setMaxDistance(e.target.value)}
-        />
-        <button onClick={fetchNearbyLocations}>Find Nearby Locations</button>
-        <ul>
-          {nearbyLocations.map((loc) => (
-            <li key={loc._id}>
-              {loc.location.coordinates.join(', ')} - {new Date(loc.timestamp).toLocaleString()}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {location && (
+        <div className="location">
+          <p><strong>User ID:</strong> {location.location.userId}</p>
+          <p><strong>Coordinates:</strong> {location.location.location.coordinates.join(', ')}</p>
+          <a href={location.mapUrl} target="_blank" rel="noopener noreferrer" className="link">View on Google Maps</a>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default Home;

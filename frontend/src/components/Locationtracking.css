@@ -1,19 +1,57 @@
-.add-button {
-    background-color: #4caf50;
-    /* Green */
-    border: none;
-    color: white;
-    padding: 10px 20px;
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
 }
 
-.add-button:hover {
-    background-color: #45a049;
+h1 {
+    color: #333;
+}
+
+.form {
+    margin-bottom: 20px;
+}
+
+.input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.button {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    background-color: #0070f3;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #005bb5;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+.location {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.link {
+    color: #0070f3;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
 }

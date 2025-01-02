@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import LocationTracking from "./components/LocationTracking";
 
 const ChatApp = () => {
   const [messages, setMessages] = useState({});
@@ -122,8 +123,11 @@ const ChatApp = () => {
           </div>
         </main>
       </div>
+       <LocationTracking/> 
     </div>
+    
   );
+  
 };
 
 export default ChatApp;
