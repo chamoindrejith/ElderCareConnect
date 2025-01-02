@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "./App.css";
+import PushNotifications from "./components/PushNotifications";
 
 const ChatApp = () => {
   const [messages, setMessages] = useState({});
@@ -126,4 +128,14 @@ const ChatApp = () => {
   );
 };
 
-export default ChatApp;
+// App Component
+function App() {
+  return (
+    <div className="App">
+      <PushNotifications />
+      <ChatApp />
+    </div>
+  );
+}
+
+export default App;

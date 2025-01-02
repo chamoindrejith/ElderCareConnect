@@ -1,44 +1,15 @@
-.notifications-container {
-    padding: 30px;
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
-    color: white;
-    border-radius: 15px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    animation: slideIn 1s ease-in-out;
-  }
-  
-  @keyframes slideIn {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0);
-    }
-  }
-  
-  .notification {
-    padding: 15px;
-    margin-bottom: 15px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-    display: flex;
-    align-items: center;
-  }
-  
-  .notification:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-  }
-  
-  .notification p {
-    margin-left: 10px;
-    font-size: 16px;
-  }
-  
-  .notification::before {
-    content: '🔔';
-    font-size: 24px;
-  }
-  
+.push-notifications {
+  text-align: center;
+  background-color: #2679cc;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.push-notifications h2 {
+  color: #9e7373;
+}
+
+.push-notifications p {
+  color: #8a7171;
+}

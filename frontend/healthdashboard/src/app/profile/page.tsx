@@ -3,10 +3,10 @@ import React from 'react'
 
 type Props = {}
 
-export default function Alerts({}: Props) {
+export default function Profile({}: Props) {
   return (
     <div>
-        <PageTitle title="Alerts"/>
+        <PageTitle title="User Profile"/>
       </div>
   )
 }
