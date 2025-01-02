@@ -1,0 +1,57 @@
+.emergency-contacts {
+    padding: 30px;
+    background: linear-gradient(135deg, #F2994A, #EB5757);
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .contact p {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .phone-button {
+    padding: 12px;
+    background: #27AE60;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .phone-button:hover {
+    background: #2ecc71;
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .phone-button:focus {
+    outline: none;
+  }
+  
+  .phone-button i {
+    font-size: 28px;
+  }
+  
+  .phone-button:before {
+    content: "\f095"; /* FontAwesome phone icon */
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900;
+    color: #fff;
+  }
+  
