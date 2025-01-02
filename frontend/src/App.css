@@ -26,11 +26,11 @@ body {
 .sidebar button {
   display: block;
   width: 100%;
-  background: #4a90e2; /* Blue background */
+  background: #4a90e2; 
   border: none;
   padding: 10px;
   margin: 10px 0;
-  color: #fff; /* White text */
+  color: #fff; 
   font-size: 1rem;
   text-align: left;
   border-radius: 8px;
@@ -41,7 +41,7 @@ body {
 
 
 .sidebar button:hover {
-  background: #357ab8; /* Darker blue on hover */
+  background: #357ab8; 
 }
 
 .chat-container {

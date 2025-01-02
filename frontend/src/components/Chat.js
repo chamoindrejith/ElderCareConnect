@@ -4,13 +4,13 @@ app.use(express.json());
 
 let chatData = {
   "Caregiver 1": [],
-  "Caregiver 2": [],    
-  "Caregiver 3": [],  
+  "Caregiver 2": [],
+  "Caregiver 3": [],
 };
 
 // Fetch chat history
 app.get("/api/chat/:caregiver", (req, res) => {
-  const caregiver = req.params.caregiver;    
+  const caregiver = req.params.caregiver;
   res.json({ messages: chatData[caregiver] || [] });
 });
 
