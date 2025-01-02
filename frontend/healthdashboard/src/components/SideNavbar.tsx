@@ -3,47 +3,53 @@
 import React, { useState } from "react";
 import { Nav } from "./ui/nav";
 import {
-  Home,
   LayoutDashboard,
+  Siren,
   BellRing,
   Settings,
   ChevronRight,
 } from "lucide-react";
 import { Button } from "./ui/button";
+import { useWindowWidth } from "@react-hook/window-size";
 
 type Props = {};
 
 export default function SideNavbar({}: Props) {
   const [isCollapsed, setisCollapsed] = useState(false);
-  
+  const onlyWidth = useWindowWidth();
+  const mobileWidth = onlyWidth < 768;
+
   function toggleSidebar() {
     setisCollapsed(!isCollapsed);
   }
-  
+
   return (
+    <>
     <div className="relative min-w-{80px} border-r px-3 pb-10 pt-24">
-      <div className="absolute right-5 top-6">
-        <Button
-          variant="secondary"
-          className="rounded-full p-2"
-          onClick={() => setisCollapsed(!isCollapsed)}
-        >
-          <ChevronRight />
-        </Button>
-      </div>
+      {!mobileWidth && (
+        <div className="absolute right-5 top-6">
+          <Button
+            variant="secondary"
+            className="rounded-full p-2"
+            onClick={toggleSidebar}
+          >
+            <ChevronRight />
+          </Button>
+        </div>
+      )}
       <Nav
-        isCollapsed={isCollapsed}
+        isCollapsed={mobileWidth ? true : isCollapsed}
         links={[
           {
-            title: "Home",
+            title: "Dashboard",
             href: "/",
-            icon: Home,
+            icon: LayoutDashboard,
             variant: "default",
           },
           {
-            title: "Dashboard",
-            href: "/dashboard",
-            icon: LayoutDashboard,
+            title: "Emergency",
+            href: "/emergency",
+            icon: Siren,
             variant: "ghost",
           },
           {
@@ -61,5 +67,6 @@ export default function SideNavbar({}: Props) {
         ]}
       />
     </div>
+    </>
   );
 }

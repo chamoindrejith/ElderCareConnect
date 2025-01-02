@@ -1,7 +1,10 @@
-import Image from "next/image";
+import PageTitle from "@/components/PageTitle";
+
 
 export default function Home() {
   return (
-  <div>Home</div>
+  <div>
+    <PageTitle title="Dashboard"/>
+  </div>
   );
 }
