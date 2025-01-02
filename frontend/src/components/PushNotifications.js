@@ -1,18 +1,56 @@
-import React from 'react';
-import './PushNotifications.css';
+import React, { useEffect } from 'react';
 
-function PushNotifications() {
+const PushNotifications = () => {
+  const subscribeToNotifications = async () => {
+    try {
+      // Request permission for notifications
+      const permission = await Notification.requestPermission();
+
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+
+        // Assuming `messaging` is initialized in Firebase
+        const { getToken } = require('firebase/messaging');
+        const { messaging } = require('../firebase/firebase-config');
+
+        const fcmToken = await getToken(messaging, {
+          vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
+        });
+
+        if (fcmToken) {
+          console.log('FCM Token:', fcmToken);
+
+          // Send the FCM token to the backend
+          await fetch(`${process.env.REACT_APP_BACKEND_URL}/notifications/subscribe`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ fcmToken }),
+          });
+
+          console.log('Token sent to backend successfully.');
+        } else {
+          console.error('Failed to generate FCM token.');
+        }
+      } else {
+        console.warn('Notification permission denied.');
+      }
+    } catch (error) {
+      console.error('Error subscribing to notifications:', error);
+    }
+  };
+
+  useEffect(() => {
+    subscribeToNotifications();
+  }, []);
+
   return (
-    <div className="notifications-container">
-      <h2>Notifications</h2>
-      <div className="notification">
-        <p>Medication Reminder: Take your pills at 6 PM.</p>
-      </div>
-      <div className="notification">
-        <p>Emergency Alert: Your caregiver called for help.</p>
-      </div>
-    </div>
+ <> 
+ 
+ </>
   );
-}
+};
 
 export default PushNotifications;
+
