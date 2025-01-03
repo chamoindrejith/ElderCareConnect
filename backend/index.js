@@ -35,10 +35,10 @@ const client = twilio(accountSid, authToken);
 
 
 // Firebase Admin SDK Initialization
-initializeApp({
+ initializeApp({
   credential: cert(require('./firebase/firebase-service-account.json')),
   projectId: process.env.FIREBASE_PROJECT_ID,
-});
+}); 
 
 
 
