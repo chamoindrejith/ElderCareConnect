@@ -1,0 +1,15 @@
+.push-notifications {
+  text-align: center;
+  background-color: #2679cc;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.push-notifications h2 {
+  color: #9e7373;
+}
+
+.push-notifications p {
+  color: #8a7171;
+}

@@ -1,0 +1,44 @@
+.feeling-checkin {
+    padding: 30px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .feeling-checkin form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  textarea {
+    resize: none;
+    height: 100px;
+    margin: 10px 0;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 16px;
+  }
+  
+  textarea::placeholder {
+    color: #ddd;
+  }
+  
+  .feeling-checkin button {
+    padding: 10px;
+    background: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  
+  .feeling-checkin button:hover {
+    transform: translateY(-3px);
+    background: #27ae60;
+  }
+  
