@@ -1,33 +1,41 @@
 const HealthData = require('../models/healthData.model');
 
-// Get Average Health Stats
-exports.getHealthSummary = async (req, res) => {
+// Get analytics summary for a user
+exports.getUserAnalytics = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.user._id; // Assuming `req.user` contains authenticated user's info
 
-    // Aggregate data for analytics
+    // Validate userId
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID is required.' });
+    }
+
+    // Aggregate analytics (e.g., average heart rate, total steps, etc.)
     const analytics = await HealthData.aggregate([
-      { $match: { userId } }, // Filter by user
+      { $match: { userId } },
       {
         $group: {
-          _id: null,
-          avgHeartRate: { $avg: '$heartRate' },
-          totalSteps: { $sum: '$steps' },
-          totalCalories: { $sum: '$caloriesBurned' },
+          _id: null, // Group all data for this user
+          averageHeartRate: { $avg: '$heartRate' },
+          highestTemperature: { $max: '$temperature' },
+          latestBloodPressure: { $last: '$bloodPressure' },
+          entryCount: { $sum: 1 }, // Number of records
         },
       },
     ]);
 
-    if (!analytics.length) {
-      return res.status(404).json({ message: 'No data found for this user.' });
+    // Check if there is data
+    if (!analytics || analytics.length === 0) {
+      return res.status(404).json({ message: 'No health data found for this user.' });
     }
 
     res.status(200).json({
-      message: 'Health data summary retrieved successfully.',
+      success: true,
+      message: 'User analytics retrieved successfully.',
       data: analytics[0],
     });
   } catch (error) {
-    console.error('Error fetching health summary:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    console.error('Error fetching user analytics:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
