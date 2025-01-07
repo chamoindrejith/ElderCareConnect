@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const { authenticateToken } = require('../middleware/auth.middleware');
 const analyticsController = require('../controllers/analytics.controller');
 
-// Route to fetch health summary for a user
-router.get('/summary/:userId', analyticsController.getHealthSummary);
+// Get analytics summary for a user
+router.get('/summary', authenticateToken, analyticsController.getUserAnalytics);
 
-module.exports = router;
+module.exports = router
