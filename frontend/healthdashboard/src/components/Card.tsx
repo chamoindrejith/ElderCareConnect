@@ -15,11 +15,11 @@ export default function Card(props: CardProps) {
   return (
     <CardContent>
       <section className="flex gap-2 items-center">
-        <props.icon className="h-6 w-6 text-gray-500"/>
+        <props.icon className="h-6 w-6 text-slate-700"/>
       </section>
       <section className="flex flex-col gap-1">
-        <h2 className="text-2xl font-semibold">{props.title}</h2>
-        <p className="text-xs text-gray-400">{props.discription}</p>
+        <h2 className="text-2xl font-semibold text-slate-900">{props.title}</h2>
+        <p className="text-xs text-orange-950">{props.discription}</p>
       </section>
     </CardContent>
   );

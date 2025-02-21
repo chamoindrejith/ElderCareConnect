@@ -7,42 +7,44 @@ import {
   BellRing,
 } from "lucide-react";
 
-const cardData: CardProps[] = [
-  {
-    icon: MessageCircleHeart,
-    title: "Chat",
-    discription: "Connect with your caregivers",
-  },
-  {
-    icon: Siren,
-    title: "Emergency Call",
-    discription: "Need any help?",
-  },
-  {
-    icon: BellRing,
-    title: "Reminders",
-    discription: "Manage your remineders",
-  },
-  {
-    icon: SquareActivity,
-    title: "Health Monitoring",
-    discription: "Manage your remineders",
-  },
-];
-
 export default function Dashboard() {
   return (
     <div className="flex flex-col w-full gap-5">
       <PageTitle title="Dashboard" />
       <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4">
-        {cardData.map((d, i) => (
+      
+        <div className="bg-blue-100 rounded-xl shadow">
           <Card
-            key={i}
-            icon={d.icon}
-            title={d.title}
-            discription={d.discription}
+            key={1}
+            icon={MessageCircleHeart}
+            title={"Chat"}
+            discription={"Connect with your caregivers"}
           />
-        ))}
+        </div>
+        <div className="bg-red-300 rounded-xl shadow">
+          <Card
+            key={2}
+            icon={Siren}
+            title={"Emergency Call"}
+            discription={"Need any help?"}
+          />
+        </div>
+        <div className="bg-orange-300 rounded-xl shadow">
+          <Card
+            key={3}
+            icon={BellRing}
+            title={"Reminders"}
+            discription={"Manage your remineders"}
+          />
+        </div>
+        <div className="bg-green-300 rounded-xl shadow">
+          <Card
+            key={3}
+            icon={SquareActivity}
+            title={"Health Monitoring"}
+            discription={"Here's your health status"}
+          />
+        </div> 
       </section>
     </div>
   );
