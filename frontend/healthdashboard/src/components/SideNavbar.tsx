@@ -6,10 +6,10 @@ import {
   Home,
   MessageCircleMore,
   UserRound,
-  Settings,
   ChevronRight,
   BellRing,
   ChartLine,
+  TriangleAlert,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useWindowWidth } from "@react-hook/window-size";
@@ -70,6 +70,12 @@ export default function SideNavbar({}: Props) {
             title: "Profile",
             href: "/profile",
             icon: UserRound,
+            variant: "ghost",
+          },
+          {
+            title: "Alert",
+            href: "/alerts",
+            icon: TriangleAlert,
             variant: "ghost",
           },
         ]}
