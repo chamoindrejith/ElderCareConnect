@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { BellRing, MapPin, Send } from "lucide-react";
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 type Message = {
   sender: string;
@@ -30,13 +31,13 @@ const ChatApp = () => {
       }));
       setInput("");
     } else {
-      alert("Please select a caregiver to send a message.");
+      toast("Please select a caregiver to send a message.");
     }
   };
 
   const handleLocation = () => {
     if (selectedCaregiver === null) {
-      alert("Please select a caregiver to send a location.");
+      toast("Please select a caregiver to send a location.");
       return;
     }
 
@@ -54,17 +55,17 @@ const ChatApp = () => {
           }));
         },
         () => {
-          alert("Unable to fetch location. Please enable location services.");
+          toast("Unable to fetch location. Please enable location services.");
         }
       );
     } else {
-      alert("Geolocation is not supported by your browser.");
+      toast("Geolocation is not supported by your browser.");
     }
   };
 
   const handleReminder = () => {
     if (selectedCaregiver === null) {
-      alert("Please select a caregiver to send a reminder.");
+      toast("Please select a caregiver to send a reminder.");
       return;
     }
 
@@ -76,7 +77,7 @@ const ChatApp = () => {
         { sender: "Reminder", text: reminderMessage },
       ],
     }));
-    alert(reminderMessage);
+    toast(reminderMessage);
   };
 
   return (
