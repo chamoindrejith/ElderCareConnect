@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
+import Link from "next/link";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import {
   Form,
@@ -13,53 +13,49 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { PasswordInput } from '@/components/ui/password-input'
-import { useSetCookie } from 'cookies-next'
-import { useRouter } from 'next/navigation'
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
+import { useSetCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 // Improved schema with additional validation rules
 const formSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
+  email: z.string().email({ message: "Invalid email address" }),
   password: z
     .string()
-    .min(6, { message: 'Password must be at least 6 characters long' })
-    .regex(/[a-zA-Z0-9]/, { message: 'Password must be alphanumeric' }),
-})
+    .min(6, { message: "Password must be at least 6 characters long" })
+    .regex(/[a-zA-Z0-9]/, { message: "Password must be alphanumeric" }),
+});
 
 export default function LoginPreview() {
-    const setCookie = useSetCookie();
-    const router = useRouter()
-    const form = useForm<z.infer<typeof formSchema>>({
+  const setCookie = useSetCookie();
+  const router = useRouter();
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
-  })
+  });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       // Assuming an async login function
-      setCookie('token','1234');
-      router.push('/');
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>,
-      )
+      setCookie("token", "1234");
+      router.push("/");
+      toast("Login successful");
     } catch (error) {
-      console.error('Form submission error', error)
-      toast.error('Failed to submit the form. Please try again.')
+      console.error("Form submission error", error);
+      toast.error("Failed to submit the form. Please try again.");
     }
   }
 
@@ -128,7 +124,7 @@ export default function LoginPreview() {
             </form>
           </Form>
           <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{' '}
+            Don&apos;t have an account?{" "}
             <Link href="/register" className="underline">
               Sign up
             </Link>
@@ -136,5 +132,5 @@ export default function LoginPreview() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

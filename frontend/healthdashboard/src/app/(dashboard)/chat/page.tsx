@@ -45,7 +45,7 @@ const ChatApp = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          const locationMessage = `📍 Location: https://www.google.com/maps?q=${latitude},${longitude}`;
+          const locationMessage = `Location: https://www.google.com/maps?q=${latitude},${longitude}`;
           setMessages((prev) => ({
             ...prev,
             [selectedCaregiver]: [
