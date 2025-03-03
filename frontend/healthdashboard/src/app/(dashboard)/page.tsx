@@ -1,4 +1,4 @@
-import Card, { CardProps } from "@/components/Card";
+import Card from "@/components/Card";
 import PageTitle from "@/components/PageTitle";
 import {
   MessageCircleHeart,
@@ -7,10 +7,10 @@ import {
   BellRing,
 } from "lucide-react";
 
-export default function Dashboard() {
+export default function Home() {
   return (
     <div className="flex flex-col w-full gap-5">
-      <PageTitle title="Dashboard" />
+      <PageTitle title="Home" />
       <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4">
       
         <div className="bg-blue-100 rounded-xl shadow">

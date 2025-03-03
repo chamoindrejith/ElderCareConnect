@@ -3,11 +3,13 @@
 import React, { useState } from "react";
 import { Nav } from "./ui/nav";
 import {
-  LayoutDashboard,
-  House,
+  Home,
+  MessageCircleMore,
   UserRound,
   Settings,
   ChevronRight,
+  BellRing,
+  ChartLine,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useWindowWidth } from "@react-hook/window-size";
@@ -43,25 +45,31 @@ export default function SideNavbar({}: Props) {
           {
             title: "Home",
             href: "/",
-            icon: House,
+            icon: Home,
             variant: "default",
           },
           {
-            title: "Dashboard",
-            href: "/dashboard",
-            icon: LayoutDashboard,
+            title: "Chat",
+            href: "/chat",
+            icon: MessageCircleMore,
+            variant: "ghost",
+          },
+          {
+            title: "Reminders",
+            href: "/reminders",
+            icon: BellRing,
+            variant: "ghost",
+          },
+          {
+            title: "Health Status",
+            href: "/status",
+            icon: ChartLine,
             variant: "ghost",
           },
           {
             title: "Profile",
             href: "/profile",
             icon: UserRound,
-            variant: "ghost",
-          },
-          {
-            title: "Settings",
-            href: "/settings",
-            icon: Settings,
             variant: "ghost",
           },
         ]}
