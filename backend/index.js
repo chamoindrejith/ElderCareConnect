@@ -11,6 +11,9 @@ const socketIo = require('socket.io');
 const { initSocket } = require('./src/controllers/chat.controllers.js');
 const {sendNotification} = require('./src/controllers/notificationController.js');
 const { initializeApp, cert } = require('firebase-admin/app');
+const analyticsRoutes = require('./routes/analytics.routes');
+app.use('/api/analytics', analyticsRoutes);
+
 
 const port = process.env.PORT;
 
