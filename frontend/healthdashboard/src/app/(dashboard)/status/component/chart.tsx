@@ -41,9 +41,9 @@ export function Component() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Area Chart - Stacked</CardTitle>
+        <CardTitle>Step Count</CardTitle>
         <CardDescription>
-          Showing total visitors for the last 6 months
+          Shows how many steps you have walked in a month
         </CardDescription>
       </CardHeader>
       <CardContent>
