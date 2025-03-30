@@ -10,6 +10,7 @@ import {
   BellRing,
   ChartLine,
   TriangleAlert,
+  UserRoundPlus,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useWindowWidth } from "@react-hook/window-size";
@@ -78,6 +79,12 @@ export default function SideNavbar({}: Props) {
             icon: TriangleAlert,
             variant: "ghost",
           },
+          {
+            title:"Add Elder",
+            href:"/addelder",
+            icon:UserRoundPlus,
+            variant:"ghost"
+          }
         ]}
       />
     </div>
