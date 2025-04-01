@@ -25,7 +25,7 @@ export default function Home() {
             key={1}
             icon={MessageCircleHeart}
             title={"Chat"}
-            discription={"Connect with your caregivers"}
+            description={"Connect with your caregivers"}
           />
         </Link>
         </div>
@@ -35,7 +35,7 @@ export default function Home() {
             key={2}
             icon={Siren}
             title={"Emergency Call"}
-            discription={"Need any help?"}
+            description={"Need any help?"}
           />
           </Link>
         </div>
@@ -45,7 +45,7 @@ export default function Home() {
             key={3}
             icon={BellRing}
             title={"Reminders"}
-            discription={"Manage your remineders"}
+            description={"Manage your remineders"}
           />
           </Link>
         </div>
@@ -55,7 +55,7 @@ export default function Home() {
             key={3}
             icon={SquareActivity}
             title={"Health Monitoring"}
-            discription={"Here's your health status"}
+            description={"Here's your health status"}
           />
           </Link>
         </div> 

@@ -1,30 +1,27 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import PageTitle from "@/components/PageTitle";
-import { BellPlus, BellRing } from "lucide-react";
-import React from "react";
+import { BellRing } from "lucide-react";
 import { AddReminder } from "./component/addReminder";
 import { CardContent, CardHeader } from "@/components/ui/card";
 
-type Props = {};
+type Props = object;
 
 export default function Reminders({}: Props) {
   const data = [
     {
       id: "1",
-      type: "Medication",
+      type: "medication",
       reminderName: "Take your medication",
       reminderDescription: "Take your medication",
-      reminderTime: "5.00 PM",
-      reminderDate: "2025 - 03 - 05",
+      reminderDateTime: new Date("2024-03-30T08:30:00"),
     },
     {
       id: "2",
-      type: "Appointment",
+      type: "appointment",
       reminderName: "Doctor's Appointment",
       reminderDescription: "Doctor's Appointment",
-      reminderTime: "5.00 PM",
-      reminderDate: "2025 - 03 - 05",
+      reminderDateTime: new Date("2025-12-30T08:30:00"),
     },
   ];
   return (
@@ -36,8 +33,7 @@ export default function Reminders({}: Props) {
           type: "",
           reminderName: "",
           reminderDescription: "",
-          reminderTime: "",
-          reminderDate: ""
+          reminderDateTime: new Date(),
         }} />
       </div>
 
@@ -55,7 +51,7 @@ export default function Reminders({}: Props) {
                 </div>
 
                 <h2 className="text-sm font-semibold">
-                  {item.reminderDate} | {item.reminderTime}
+                  {item?.reminderDateTime?.toLocaleString()}
                 </h2>
               </CardHeader>
               <CardContent>

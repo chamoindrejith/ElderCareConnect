@@ -2,7 +2,7 @@ import PageTitle from '@/components/PageTitle'
 import React from 'react'
 import { Component } from './component/chart'
 
-type Props = {}
+type Props = object;
 
 export default function Health_Status({}: Props) {
   return (
