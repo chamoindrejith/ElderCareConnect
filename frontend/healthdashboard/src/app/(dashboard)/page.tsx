@@ -25,7 +25,7 @@ export default function Home() {
             key={1}
             icon={MessageCircleHeart}
             title={"Chat"}
-            discription={"Connect with your caregivers"}
+            description={"Connect with your caregivers"}
           />
         </Link>
         </div>
