@@ -1,7 +1,6 @@
 import { Card, CardHeader } from "@/components/ui/card";
 import PageTitle from "@/components/PageTitle";
 import { AlertTriangle } from "lucide-react";
-import React from "react";
 
 type Props = {};
 
@@ -15,7 +14,7 @@ export default function Alerts({}: Props) {
           <AlertTriangle className="w-5 h-5 text-red-700 " />
           <h2 className="text-lg font-semibold">Emergency Alert</h2>
           </div>
-          <p className="text-sm text-gray-600">Your adult's heart rate is too high. Please consult his doctor.</p>
+          <p className="text-sm text-gray-600">Your adult&apos;s heart rate is too high. Please consult his doctor.</p>
         </CardHeader>
       </Card>
     </div>
