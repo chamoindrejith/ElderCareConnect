@@ -1,14 +1,12 @@
 import PageTitle from "@/components/PageTitle";
 import Image from "next/image";
 
-type Props = {
-  name: string;
-  age: number;
-  location: string;
-  photo: string;
-};
+export default function Profile() {
+  const name = "John Doe"; // Dummy data
+  const photo = "/placeholder.jpg"; // Dummy image path
+  const age = 65; // Dummy age
+  const location = "New York, USA"; // Dummy location
 
-export default function Profile({ name, age, location, photo }: Props) {
   return (
     <div className="flex flex-col items-center p-3 rounded-md">
       <PageTitle title={name} />
