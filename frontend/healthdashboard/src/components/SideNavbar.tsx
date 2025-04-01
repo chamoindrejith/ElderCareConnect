@@ -15,7 +15,7 @@ import {
 import { Button } from "./ui/button";
 import { useWindowWidth } from "@react-hook/window-size";
 
-type Props = {}; // Define Props as an empty object
+type Props = Record<string, never>; // Define Props as an explicitly empty object
 
 export default function SideNavbar({}: Props) {
   const [isCollapsed, setisCollapsed] = useState(false);
