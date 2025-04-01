@@ -135,12 +135,12 @@ export function AddReminder({ data }: Props) {
 
                 <FormField
                   control={form.control}
-                  name="type"
+                  name="reminderDescription"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
-                        <Textarea id="description" className="col-span-3" />
+                        <Textarea id="description" className="col-span-3" {...field} />
                       </FormControl>
                     </FormItem>
                   )}
