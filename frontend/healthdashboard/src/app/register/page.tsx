@@ -63,9 +63,10 @@ export default function InputForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  function onSubmit() {
     toast("Login successful");
   }
+
   return (
     <div className="flex justify-center items-center my-8">
       <Card>
