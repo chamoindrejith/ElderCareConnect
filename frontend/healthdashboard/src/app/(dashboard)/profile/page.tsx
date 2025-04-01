@@ -1,4 +1,5 @@
 import PageTitle from "@/components/PageTitle";
+import Image from "next/image";
 
 type Props = {
   id: string;
@@ -14,7 +15,7 @@ export default function Profile(props: Props) {
       <PageTitle title={props.name} />
       <div className="user-profile">
         <div className="rounded-full w-28 h-28 overflow-hidden bg-slate-400 m-5">
-          <img src={props.photo} alt="User Photo" />
+          <Image src={props.photo} alt="User Photo" width={112} height={112} />
         </div>
         <div className="text-xl">{props.name}</div>
         <div className="user-details">

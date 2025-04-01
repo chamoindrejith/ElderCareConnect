@@ -2,7 +2,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import PageTitle from "@/components/PageTitle";
 import { AlertTriangle } from "lucide-react";
 
-type Props = {};
+type Props = object;
 
 export default function Alerts({}: Props) {
   return (
