@@ -28,8 +28,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { BellPlus } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
-import { useId, useState } from "react";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
+
 type Props = {
   data: {
     id: string;
@@ -39,6 +39,7 @@ type Props = {
     reminderDateTime: Date;
   };
 };
+
 const formSchema = z.object({
   type: z.string().min(2, {
     message: "Select the type of your reminder.",
@@ -53,9 +54,6 @@ const formSchema = z.object({
 });
 
 export function AddReminder({ data }: Props) {
-  const id = useId();
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  const [initialData, setInitialData] = React.useState(data);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: data || {
@@ -65,8 +63,9 @@ export function AddReminder({ data }: Props) {
       reminderDateTime: new Date(),
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(date);
+
+  function onSubmit() {
+    console.log(form.getValues());
   }
 
   return (
@@ -135,12 +134,12 @@ export function AddReminder({ data }: Props) {
 
                 <FormField
                   control={form.control}
-                  name="type"
+                  name="reminderDescription"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
-                        <Textarea id="description" className="col-span-3" />
+                        <Textarea id="description" className="col-span-3" {...field} />
                       </FormControl>
                     </FormItem>
                   )}

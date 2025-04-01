@@ -78,7 +78,7 @@ export default function Login() {
             <CardHeader>
               <CardTitle>Caregiver Login</CardTitle>
               <CardDescription>
-                Enter your account details here. Click login when you're done.
+                Enter your account details here. Click login when you&apos;re done.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
@@ -95,7 +95,7 @@ export default function Login() {
               <Button>Login</Button>
               <div>
                 <h3 className="text-center text-sm text-gray-500">
-                  Don't have an account? <Link href="/register">Signup</Link>
+                  Don&apos;t have an account? <Link href="/register">Signup</Link>
                 </h3>
               </div>
             </CardFooter>

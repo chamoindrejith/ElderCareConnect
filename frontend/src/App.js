@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-
+import "./App.css";
+import PushNotifications from "./components/PushNotifications";
+import LocationTracking from "./components/LocationTracking";
 const ChatApp = () => {
   const [messages, setMessages] = useState({});
   const [input, setInput] = useState("");
@@ -122,8 +124,21 @@ const ChatApp = () => {
           </div>
         </main>
       </div>
+       <LocationTracking/> 
     </div>
+    
   );
+  
 };
 
-export default ChatApp;
+// App Component
+function App() {
+  return (
+    <div className="App">
+      <PushNotifications />
+      <ChatApp />
+    </div>
+  );
+}
+
+export default App;

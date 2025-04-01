@@ -1,12 +1,11 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import PageTitle from "@/components/PageTitle";
-import { BellPlus, BellRing } from "lucide-react";
-import React from "react";
+import { BellRing } from "lucide-react";
 import { AddReminder } from "./component/addReminder";
 import { CardContent, CardHeader } from "@/components/ui/card";
 
-type Props = {};
+type Props = object;
 
 export default function Reminders({}: Props) {
   const data = [

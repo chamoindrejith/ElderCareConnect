@@ -8,12 +8,10 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Form,
-  FormControl,
-  FormDescription,
-  FormField,
+  FormControl, FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -41,13 +39,13 @@ const FormSchema = z.object({
   password: z.string().min(6, {
     message: "Password must be at least 6 characters.",
   }),
-  confirmPasswrod: z.string().min(6, {
+  confirmPassword: z.string().min(6, {
     message: "Password must be at least 6 characters.",
   }),
   age: z.number().min(18, {
     message: "You must be at least 18 years old.",
   }),
-  phone: z.number().min(10, {
+  phone: z.string().min(10, {
     message: "Mobile number must be at least 10 characters.",
   }),
   nic: z.string().min(13, {
@@ -65,9 +63,10 @@ export default function InputForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  function onSubmit() {
     toast("Login successful");
   }
+
   return (
     <div className="flex justify-center items-center my-8">
       <Card>
@@ -204,7 +203,7 @@ export default function InputForm() {
               />
               <FormField
                 control={form.control}
-                name="confirmPasswrod"
+                name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Confirm Password</FormLabel>
