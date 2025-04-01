@@ -9,18 +9,18 @@ type Props = {
   photo: string;
 };
 
-export default function Profile(props: Props) {
+export default function Profile({ id, name, age, location, photo }: Props) {
   return (
     <div className="flex flex-col items-center p-3 rounded-md">
-      <PageTitle title={props.name} />
+      <PageTitle title={name} />
       <div className="user-profile">
         <div className="rounded-full w-28 h-28 overflow-hidden bg-slate-400 m-5">
-          <Image src={props.photo} alt="User Photo" width={112} height={112} />
+          <Image src={photo} alt="User Photo" width={112} height={112} />
         </div>
-        <div className="text-xl">{props.name}</div>
+        <div className="text-xl">{name}</div>
         <div className="user-details">
-          <p>Age: {props.age}</p>
-          <p>Location: {props.location}</p>
+          <p>Age: {age}</p>
+          <p>Location: {location}</p>
         </div>
       </div>
     </div>
