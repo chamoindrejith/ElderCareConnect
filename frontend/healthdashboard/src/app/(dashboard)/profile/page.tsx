@@ -2,14 +2,13 @@ import PageTitle from "@/components/PageTitle";
 import Image from "next/image";
 
 type Props = {
-  id: string;
   name: string;
   age: number;
   location: string;
   photo: string;
 };
 
-export default function Profile({ id, name, age, location, photo }: Props) {
+export default function Profile({ name, age, location, photo }: Props) {
   return (
     <div className="flex flex-col items-center p-3 rounded-md">
       <PageTitle title={name} />
