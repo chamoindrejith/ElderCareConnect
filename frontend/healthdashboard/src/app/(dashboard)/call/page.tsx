@@ -12,17 +12,10 @@ import { Phone } from "lucide-react";
 
 const contacts = [
   {
-    contactName: "Caregiver 1",
-    contactNumber: "1234567890",
+    contactName: "Caregiver",
+    contactNumber: "+947137922",
   },
-  {
-    contactName: "Caregiver 2",
-    contactNumber: "1234567890",
-  },
-  {
-    contactName: "Caregiver 3",
-    contactNumber: "1234567890",
-  },
+
 ];
 
 export default function Call() {
