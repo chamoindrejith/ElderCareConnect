@@ -1,0 +1,196 @@
+% LaTeX Template for IT3162 Project Report, Version 1.0
+% Created by: T. Jeyamugan
+
+
+\documentclass[12pt, a4paper]{report}
+\usepackage[pdftex]{graphicx} %for embedding images
+\usepackage{url} %for proper url entries
+% \usepackage[bookmarks, colorlinks=false, pdfborder={0 0 0}, pdftitle={<pdf title here>}, pdfauthor={<author's name here>}, pdfsubject={<subject here>}, pdfkeywords={<keywords here>}]{hyperref} %for creating links in the pdf version and other additional pdf attributes, no effect on the printed document
+
+\usepackage[colorlinks]{hyperref}
+\renewcommand*{\contentsname}{\hyperlink{contents}{Contents}}
+\renewcommand*{\thepage}{\hyperref[contents]{\arabic{page}}}
+
+\begin{document}
+\renewcommand\bibname{References} %Renames "Bibliography" to "References" on ref page
+
+\pagenumbering{roman} %numbering before main content starts
+%Include: title, acknowledgement, dedication, tables, etc
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title page
+\begin{titlepage}
+
+\begin{center}
+
+% Title
+\Large \textbf {ElderCare Connect}\\
+Progressive Web Application to Support Elderly Individuals Living Alone\\%\\[0.5in]
+
+\vspace{1in}%
+
+
+\normalsize by \\%
+\vspace{1em}
+\textup{\large {\bf Group 01 }\\}
+ \vspace{1in}%
+
+
+ \large \emph{Submitted in partial fulfilment of the requirement
+for the degree of Bachelor of Science in Information Technology}
+\vspace{2.5in}
+
+
+
+
+\vspace{1em}
+Department of Physical Science\\
+Faculty of Applied Science\\
+University of Vavuniya\\
+% \vspace{1em}
+
+
+% \vspace{.1in}
+% \date{}\\
+
+
+\vfill
+
+March, 2025
+
+\end{center}
+
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      declaration
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Declaration}
+\chapter*{Declaration}
+We Group 01 do hereby declare that this Project Report is original and has not been published and/or submitted for any other degree award to any other University before.
+
+
+\begin{table}[!ht]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{\#} & \textbf{Names}  & \textbf{Registration Number} & \textbf{Signature} \\ \hline
+1 & S.A.C.S. Indrejith          & 2020/ICT/65         &           \\ \hline
+2 & H.D.S. Perera               & 2020/ICT/91         &          \\ \hline
+3 & L.A.M. Lakmini              & 2020/ICT/44         &          \\ \hline
+4 & H. Thavarajah               & 2020/ICT/120        &          \\ \hline
+5 & C.G.H.P.L. Chandrasekara    & 2020/ICT/69         &          \\ \hline
+6 & G. Lakashna                 & 2020/ICT/83         &          \\ \hline
+7 & B.M. Imran                  & 2020/ICT/02         &          \\ \hline
+
+\end{tabular}%
+}
+\end{table}
+\vspace{0.5in}
+\noindent
+Date: ---------------\\
+
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Supervisor's   Approval
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Approval}
+\chapter*{Approval}
+This Project Report has been submitted for examination with the approval of the supervisor/ following supervisors.
+
+\vspace{1.0em}
+\noindent
+Signature:          \hspace{4in} Date: \\
+
+\vspace{2.0em}
+
+\noindent
+Mr. K. Mathanaharan \\
+
+\vspace{2.0em}
+\noindent
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%       Abstract
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Abstract}
+\chapter*{Abstract}
+ElderCare Connect is a Progressive Web Application (PWA) designed to enhance the safety, health monitoring, and social well-being of elderly individuals living alone. The elderly population faces significant challenges including medical emergencies, falls, and social isolation, which can lead to delayed treatment and deteriorating mental health. This application addresses these concerns by providing real-time health monitoring through integration with APIs like Google Fit, emergency response features with instantaneous alerts to caregivers or emergency services, and social engagement tools to combat isolation. Leveraging PWA technology, ElderCare Connect delivers native app-like experiences across multiple devices while maintaining offline functionality and requiring no app store installation.The application prioritizes user-friendly interface design with accessibility features for elderly users, robust security measures to protect sensitive health data, and scalable architecture to support growing user needs. By empowering elderly users to maintain independence while offering peace of mind to family members and caregivers, ElderCare Connect aims to improve quality of life, reduce hospitalization rates, and enhance the emotional resilience of elderly individuals living alone, ultimately promoting dignified and safe aging at home.
+
+
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%       acknowledgement
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Acknowledgement}
+\chapter*{Acknowledgement}
+We are deeply indebted to our project supervisor Mr. K. Mathanaharan whose unlimited steadfast support and inspirations have made this project a great success. In a very special way, we thank him for every support he has rendered unto us to see that we succeed in this challenging study.
+
+Special thanks go to our friends and families who have contained the hectic moments and stress we have been through during the course of the research project.
+
+We thank the University of Vavuniya for giving us the grand opportunity to work as a team which has indeed promoted our team work spirit and communication skills. We also thank the individual group members for the good team spirit and solidarity.
+
+% \newpage
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\tableofcontents
+\listoffigures
+% \listoftables
+
+\newpage
+\pagenumbering{arabic} %reset numbering to normal for the main content
+%%%%%%%%%%%%%%%%%%%  Intro   %%%%%%%%%%%%%%%%%%%
+\input{01 Introduction}
+\newpage
+%%%%%%%%%%%%%%%%%%%  Literature Review   %%%%%%%%%%%%%%%%%%%
+\input{02 Literature Review}
+\newpage
+%%%%%%%%%%%%%%%%%%%  methodology   %%%%%%%%%%%%%%%%%%%
+\input{03 Methodology}
+\newpage
+%%%%%%%%%%%%%%%%%%%  analysis and design %%%%%%%%%%%%%%%%%%%
+\input{04 System_Study_Analysis_and_Design}
+\newpage
+%%%%%%%%%%%%%%%%%%%    presentation   %%%%%%%%%%%%%%%%%%%
+\input{05 Presentation of results}
+\newpage
+% \begin{figure}
+%   \centering
+%   % Requires \usepackage{graphicx}
+%   \includegraphics[width=6.4in]{dashboard}\\
+%   \caption{Dashboard: This is the title of the figure}\label{fig:dashboard}
+% \end{figure}
+
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%                 conclusion.tex}
+\input{06 Limitations}
+\newpage
+\newpage
+
+
+
+
+
+
+
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{IEEEtran}
+\bibliography{references} 
+
+\end{document}
