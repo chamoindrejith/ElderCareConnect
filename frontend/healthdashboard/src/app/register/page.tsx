@@ -25,6 +25,8 @@ import {
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -58,6 +60,7 @@ const FormSchema = z.object({
 });
 
 export default function InputForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -65,8 +68,26 @@ export default function InputForm() {
     },
   });
 
-  function onSubmit() {
-    toast("Login successful");
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      // Check for duplicate fields in the database
+      const existingUser = await axios.post("/api/check-user", { email: data.email, nic: data.nic });
+      if (existingUser.data.exists) {
+        toast.error("A user with this email or NIC already exists.");
+        return;
+      }
+
+      // Add the user to the database
+      const response = await axios.post("/api/register", data);
+      if (response.status === 201) {
+        toast.success("Registration successful!");
+        router.push("/login"); // Redirect to caregiver login page
+      } else {
+        toast.error("Registration failed. Please try again.");
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+    }
   }
 
   return (
@@ -78,7 +99,7 @@ export default function InputForm() {
             Enter your account details to signup as a caregiver.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-2">
+        <CardContent className="space-y-1">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -216,6 +237,8 @@ export default function InputForm() {
                   </FormItem>
                 )}
               />
+              
+              </div>
               <FormField
                 control={form.control}
                 name="username"
@@ -229,7 +252,6 @@ export default function InputForm() {
                   </FormItem>
                 )}
               />
-              </div>
             </form>
           </Form>
         </CardContent>
