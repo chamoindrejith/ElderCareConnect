@@ -13,7 +13,7 @@ import { Phone } from "lucide-react";
 const contacts = [
   {
     contactName: "Caregiver",
-    contactNumber: "+947137922",
+    contactNumber: "+94713797922",
   },
 
 ];
