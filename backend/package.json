@@ -25,6 +25,7 @@
     "node-cron": "^3.0.3",
     "nodemon": "^3.1.7",
     "socket.io": "^4.8.1",
+    "twilio": "^5.5.1",
     "uuid": "^11.0.3",
     "validatorjs": "^3.22.1"
   }

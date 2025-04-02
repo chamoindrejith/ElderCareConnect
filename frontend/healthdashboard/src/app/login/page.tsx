@@ -37,6 +37,7 @@ export default function Login() {
         const user = result.user;
         setCookie("token", token);
         setCookie("user", user);
+        setCookie("role", "elder");
         router.push("/");
         toast("Login successful");
       })
