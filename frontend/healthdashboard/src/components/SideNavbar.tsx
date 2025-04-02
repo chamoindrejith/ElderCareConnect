@@ -38,37 +38,37 @@ export default function SideNavbar({}: Props) {
       title: "Home",
       href: "/",
       icon: Home,
-      variant: "default" as "default", // Explicitly type as "default"
+      variant: "default" as const, // Use const assertion
     },
     {
       title: "Chat",
       href: "/chat",
       icon: MessageCircleMore,
-      variant: "ghost" as "ghost", // Explicitly type as "ghost"
+      variant: "ghost" as const, // Use const assertion
     },
     {
       title: "Reminders",
       href: "/reminders",
       icon: BellRing,
-      variant: "ghost" as "ghost",
+      variant: "ghost" as const,
     },
     {
       title: "Health Status",
       href: "/status",
       icon: ChartLine,
-      variant: "ghost" as "ghost",
+      variant: "ghost" as const,
     },
     {
       title: "Profile",
       href: "/profile",
       icon: UserRound,
-      variant: "ghost" as "ghost",
+      variant: "ghost" as const,
     },
     {
       title: "Dashboard",
       href: "/dashboard",
       icon: ChevronRight,
-      variant: "ghost" as "ghost",
+      variant: "ghost" as const,
     },
   ];
 
@@ -78,13 +78,13 @@ export default function SideNavbar({}: Props) {
       title: "Alert",
       href: "/alerts",
       icon: TriangleAlert,
-      variant: "ghost" as "ghost",
+      variant: "ghost" as const,
     },
     {
       title: "Add Elder",
       href: "/addelder",
       icon: UserRoundPlus,
-      variant: "ghost" as "ghost",
+      variant: "ghost" as const,
     },
   ];
 
