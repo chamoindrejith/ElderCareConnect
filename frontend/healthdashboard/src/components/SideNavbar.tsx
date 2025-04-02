@@ -25,8 +25,13 @@ export default function SideNavbar({}: Props) {
   const mobileWidth = onlyWidth < 768;
 
   useEffect(() => {
-    const role = getCookie("userRole") as string | null; // Get user role from cookies
-    setUserRole(role);
+    const role = (getCookie("userRole") as string | null) || localStorage.getItem("userRole"); // Fallback to local storage
+    console.log(role); // Retrieve the role
+    if (role === "caregiver" || role === "elder") {
+      setUserRole(role); // Set only if the role is valid
+    } else {
+      setUserRole(null); // Default to null if an unexpected value is found
+    }
   }, []);
 
   function toggleSidebar() {

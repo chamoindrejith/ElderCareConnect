@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import Link from "next/link";
-
+import axiosInstance from "@/lib/axiosInstance"; // Import the centralized Axios instance
 
 const provider = new GoogleAuthProvider();
 
@@ -38,6 +38,8 @@ export default function Login() {
         setCookie("token", token);
         setCookie("user", user);
         setCookie("role", "elder");
+        localStorage.setItem("userRole", "elder");
+        console.log(token) // Store role in local storage
         router.push("/");
         toast("Login successful");
       })
@@ -45,6 +47,26 @@ export default function Login() {
         console.error("Form submission error", error);
         toast.error("Failed to submit the form. Please try again.");
       });
+  };
+
+  const handleCaregiverLogin = async () => {
+    const username = (document.getElementById("username") as HTMLInputElement)?.value;
+    const password = (document.getElementById("password") as HTMLInputElement)?.value;
+
+    try {
+      const response = await axiosInstance.post("/caregivers/login", { username, password }); // Use axiosInstance
+      const { token, user } = response.data;
+      setCookie("token", token);
+      setCookie("user", user);
+      setCookie("role", "caregiver");
+      localStorage.setItem("userRole", "caregiver"); // Store role in local storage
+      router.push("/");
+      toast("Login successful");
+
+    } catch (error) {
+      console.error("Caregiver login error", error);
+      toast.error("Invalid username or password. Please try again.");
+    }
   };
 
   return (
@@ -93,7 +115,7 @@ export default function Login() {
               </div>
             </CardContent>
             <CardFooter className="flex flex-col justify-start">
-              <Button>Login</Button>
+              <Button onClick={handleCaregiverLogin}>Login</Button>
               <div>
                 <h3 className="text-center text-sm text-gray-500">
                   Don&apos;t have an account? <Link href="/register">Signup</Link>
