@@ -53,6 +53,8 @@ const FormSchema = z.object({
   }),
   address: z.string().min(10),
   gender: z.string().min(4),
+  relationship: z.string().min(2, {
+    message: "Relationship must be at least 2 characters.",})
 });
 
 export default function InputForm() {
@@ -209,6 +211,19 @@ export default function InputForm() {
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
                       <Input placeholder="abcd123" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Relationship</FormLabel>
+                    <FormControl>
+                      <Input placeholder="username" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
