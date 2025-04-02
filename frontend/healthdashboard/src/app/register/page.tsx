@@ -85,7 +85,7 @@ export default function InputForm() {
       } else {
         toast.error("Registration failed. Please try again.");
       }
-    } catch (error) {
+    } catch {
       toast.error("An error occurred. Please try again.");
     }
   }
