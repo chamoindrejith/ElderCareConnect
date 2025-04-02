@@ -64,12 +64,6 @@ export default function SideNavbar({}: Props) {
       icon: UserRound,
       variant: "ghost" as const,
     },
-    {
-      title: "Dashboard",
-      href: "/dashboard",
-      icon: ChevronRight,
-      variant: "ghost" as const,
-    },
   ];
 
   const caregiverLinks = [
