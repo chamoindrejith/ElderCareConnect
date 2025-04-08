@@ -1,14 +1,23 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -17,25 +26,47 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { BellPlus, Calendar as CalendarIcon } from "lucide-react";
-import { DatetimePicker } from "@/components/ui/datetime-picker";
-import { Textarea } from "@/components/ui/textarea"
+import { BellPlus } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 
 type Props = {
-    data: {
-      id: string;
-      type: string;
-      reminderName: string;
-      reminderDescription: string;
-      reminderTime: string;
-      reminderDate: string;
-    };
+  data: {
+    id: string;
+    type: string;
+    reminderName: string;
+    reminderDescription: string;
+    reminderDateTime: Date;
   };
+};
 
-export function AddReminder( {data}: Props) {
-  const [date, setDate] = React.useState<Date>();
-  const [initialData, setInitialData] = React.useState(data);
+const formSchema = z.object({
+  type: z.string().min(2, {
+    message: "Select the type of your reminder.",
+  }),
+  reminderName: z.string().min(2, {
+    message: "Please enter a name for your reminder.",
+  }),
+  reminderDescription: z.string().min(2, {
+    message: "Please enter a description for your reminder.",
+  }),
+  reminderDateTime: z.date(),
+});
+
+export function AddReminder({ data }: Props) {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: data || {
+      reminderName: "",
+      reminderDescription: "",
+      type: "",
+      reminderDateTime: new Date(),
+    },
+  });
+
+  function onSubmit() {
+    console.log(form.getValues());
+  }
 
   return (
     <Dialog>
@@ -45,56 +76,96 @@ export function AddReminder( {data}: Props) {
           {data?.id ? "Edit" : "Add"} Reminder
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-full max-w-2xl h-[80svh]">
         <DialogHeader>
-          <DialogTitle>Add Reminder</DialogTitle>
+          <DialogTitle>{data?.id ? "Edit" : "Add"} Reminder</DialogTitle>
           <DialogDescription>
-            Add your medication, appointment, or any other reminder.
+            {data?.id ? "Edit" : "Add"} your medication, appointment, or any
+            other reminder.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="type" className="text-right">
-              Reminder Type
-            </Label>
-            <Select>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Reminder" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Medication</SelectItem>
-                <SelectItem value="dark">Hydration</SelectItem>
-                <SelectItem value="system">Appoinment</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Reminder Name
-            </Label>
-            <Input id="name" className="col-span-3" value={data?.reminderName}/>
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Description
-            </Label>
-            <Textarea id="description" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Date
-            </Label>
-            <DatetimePicker
-              format={[
-                ["months", "days", "years"],
-                ["hours", "minutes", "am/pm"],
-              ]}
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="flex gap-8">
+              <div className="w-full">
+                <FormField
+                  control={form.control}
+                  name="type"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Reminder Type</FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Reminder" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="medication">
+                              Medication
+                            </SelectItem>
+                            <SelectItem value="hydration">Hydration</SelectItem>
+                            <SelectItem value="appoinment">
+                              Appoinment
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="reminderName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Reminder Name</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="reminderDescription"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Description</FormLabel>
+                      <FormControl>
+                        <Textarea id="description" className="col-span-3" {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="reminderDateTime"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Date</FormLabel>
+                      <FormControl>
+                        <DateTimePicker
+                          date={field.value}
+                          setDate={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <Button type="submit">Save changes</Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

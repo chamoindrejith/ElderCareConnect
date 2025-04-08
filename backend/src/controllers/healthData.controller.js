@@ -1,7 +1,7 @@
 const HealthData = require('../models/healthData.model');
 
 // Add new health data with abnormality detection
-exports.addHealthData = async (req, res) => {
+const addHealthData = async (req, res) => {
   try {
     const { heartRate, bloodPressure, temperature } = req.body;
     const userId = req.user._id; // Assuming `req.user` contains authenticated user's info
@@ -42,3 +42,5 @@ exports.addHealthData = async (req, res) => {
     res.status(500).json({ message: 'Internal server error.', error: error.message });
   }
 };
+
+module.exports = {addHealthData}
